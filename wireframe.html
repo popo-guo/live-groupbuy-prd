@@ -109,13 +109,13 @@
   <p class="lead">依 PRD v1.3 的 Phase 0（兩週上線版）範圍繪製，共 14 個關鍵畫面。灰色＝佔位元素；<span class="anno" style="vertical-align:0">藍標</span>＝重點邏輯註記。供內部與泡泡討論用，非視覺定稿。</p>
 
   <nav>
-    <a href="#ch">通路端（直播組/團購組）</a>
+    <a href="#ch">通路端（直播主/團購主）</a>
     <a href="#vn">廠商後台</a>
     <a href="#ad">管理後台</a>
     <a href="#tk">工單系統</a>
   </nav>
 
-  <h2 id="ch">通路端<span class="role r-ch">直播組／團購組</span></h2>
+  <h2 id="ch">通路端<span class="role r-ch">直播主／團購主</span></h2>
   <p class="secdesc">手機優先。核心動線：選品 → 邀約 → 簽約（線下）→ 批發下單 → 匯款回報。</p>
   <div class="grid">
 
@@ -123,11 +123,11 @@
       <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">01 註冊／登入</span><span class="tag">通路端</span></div>
       <div class="scr">
         <div class="w-nav"><div class="w-logo"></div><div class="w-sp"></div></div>
-        <div class="w-h">建立帳號（以「組」為單位）</div>
-        <div class="field"><label>組別類型 <span class="req">*</span></label>
-          <div class="w-chips"><span class="w-chip on">直播組</span><span class="w-chip">團購組</span></div></div>
+        <div class="w-h">建立帳號（直播主／團購主）</div>
+        <div class="field"><label>身分類型 <span class="req">*</span></label>
+          <div class="w-chips"><span class="w-chip on">直播主</span><span class="w-chip">團購主</span></div></div>
         <div class="col2">
-          <div class="field"><label>組名／名稱 <span class="req">*</span></label><div class="in"></div></div>
+          <div class="field"><label>名稱／暱稱 <span class="req">*</span></label><div class="in"></div></div>
           <div class="field"><label>聯絡人・電話 <span class="req">*</span></label><div class="in"></div></div>
         </div>
         <div class="field"><label>主要販售管道 <span class="req">*</span></label>
@@ -135,7 +135,7 @@
         <div class="field"><label>通路規模（粉絲數／群人數）</label><div class="in"></div></div>
         <span class="btn p full">送出，等待平台審核</span>
       </div>
-      <div class="note"><b>邏輯：</b>註冊即送審；管理員開通後，團購組自動取得 30 天免費試用。</div>
+      <div class="note"><b>邏輯：</b>註冊即送審；管理員開通後，團購主自動取得 30 天免費試用。</div>
     </div>
 
     <div class="frame">
@@ -232,7 +232,7 @@
         </div>
         <span class="btn p full">送出訂單並回報匯款</span>
       </div>
-      <div class="note"><b>邏輯：</b>MVP 不串金流——訂單產生後顯示公司匯款帳戶，通路組回報末五碼，管理端人工確認入帳後轉「備貨中」。</div>
+      <div class="note"><b>邏輯：</b>MVP 不串金流——訂單產生後顯示公司匯款帳戶，通路主回報末五碼，管理端人工確認入帳後轉「備貨中」。</div>
     </div>
 
     <div class="frame">
@@ -253,7 +253,7 @@
     </div>
 
     <div class="frame">
-      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">07 訂閱牆（團購組）</span><span class="tag">通路端・鎖定態</span></div>
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">07 訂閱牆（團購主）</span><span class="tag">通路端・鎖定態</span></div>
       <div class="scr">
         <div class="w-nav"><div class="w-logo"></div><div class="w-sp"></div><div class="w-av"></div></div>
         <div class="cards" style="filter:blur(0);opacity:.45">
@@ -310,10 +310,10 @@
           <tr><td>洗顏慕斯</td><td><span class="st a">審核中</span></td><td>800</td></tr>
           <tr><td>果乾禮盒</td><td><span class="st r">退件：缺產地證明</span></td><td>—</td></tr></table>
         <div class="w-h" style="margin-top:12px">合作邀約</div>
-        <div class="msg"><div class="who"><b>直播組・小美直播</b> 6/30・粉絲 8.5萬・FB/IG</div>
+        <div class="msg"><div class="who"><b>直播主・小美直播</b> 6/30・粉絲 8.5萬・FB/IG</div>
           您好，我們主打韓妝，想合作貴品牌精華液系列…
           <div class="row" style="margin-top:6px"><span class="btn p">接受邀約</span><span class="btn">婉拒</span></div></div>
-        <div class="msg"><div class="who"><b>團購組・媽咪好物團</b> 6/28・LINE群 3,200人</div>
+        <div class="msg"><div class="who"><b>團購主・媽咪好物團</b> 6/28・LINE群 3,200人</div>
           想詢問果乾禮盒團購配合…
           <div class="row" style="margin-top:6px"><span class="st g">已接受 → 平台安排簽約中</span></div></div>
       </div>
@@ -331,15 +331,15 @@
         <div class="side">
           <div class="smenu"><span class="on">審核中心</span><span>定價管理</span><span>訂單金流</span><span>帳號管理</span><span>訂閱管理</span><span>工單</span><span>儀表板</span></div>
           <div>
-            <div class="kpi"><div>待審廠商<div class="n">3</div></div><div>待審商品<div class="n">12</div></div><div>待審通路組<div class="n">5</div></div><div>待確認入帳<div class="n">2</div></div></div>
-            <div class="w-chips"><span class="w-chip on">商品審核</span><span class="w-chip">廠商開通</span><span class="w-chip">通路組開通</span></div>
+            <div class="kpi"><div>待審廠商<div class="n">3</div></div><div>待審商品<div class="n">12</div></div><div>待審通路主<div class="n">5</div></div><div>待確認入帳<div class="n">2</div></div></div>
+            <div class="w-chips"><span class="w-chip on">商品審核</span><span class="w-chip">廠商開通</span><span class="w-chip">通路主開通</span></div>
             <table class="wt"><tr><th>商品</th><th>廠商</th><th>PIF</th><th>操作</th></tr>
               <tr><td>洗顏慕斯</td><td>K-Beauty</td><td><span class="st g">✓</span></td><td><span class="st b">通過</span> <span class="st r">退件</span></td></tr>
               <tr><td>果乾禮盒</td><td>泰國零食工廠</td><td><span class="st gy">不需</span></td><td><span class="st b">通過</span> <span class="st r">退件</span></td></tr></table>
           </div>
         </div>
       </div>
-      <div class="note"><b>邏輯：</b>三種審核（廠商營登／商品含法遵檢核／通路組開通）集中一處；退件需填原因回廠商。</div>
+      <div class="note"><b>邏輯：</b>三種審核（廠商營登／商品含法遵檢核／通路主開通）集中一處；退件需填原因回廠商。</div>
     </div>
 
     <div class="frame">
@@ -351,8 +351,8 @@
           <tr><th>價格層</th><th>金額</th><th>說明</th></tr>
           <tr><td>成本價 🔒</td><td>$230</td><td>僅管理端可見</td></tr>
           <tr><td>平台加價</td><td>+$90（+39%）</td><td>金額或 % 擇一</td></tr>
-          <tr><td><b>批發價</b></td><td><b>$320</b></td><td>通路組可見</td></tr>
-          <tr><td>建議售價</td><td>$499</td><td>通路組可見</td></tr>
+          <tr><td><b>批發價</b></td><td><b>$320</b></td><td>通路主可見</td></tr>
+          <tr><td>建議售價</td><td>$499</td><td>通路主可見</td></tr>
         </table>
         <div class="lock" style="background:var(--green-bg);border-color:var(--green);color:var(--green);margin:8px 0">✓ 平台毛利 28%，高於「美妝」類別門檻 25%</div>
         <div class="w-h">階梯價設定（單次採購量）</div>
@@ -367,7 +367,7 @@
       <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">12 訂單金流（確認入帳）</span><span class="tag">管理後台</span></div>
       <div class="scr">
         <div class="w-chips"><span class="w-chip on">待確認入帳 2</span><span class="w-chip">備貨中</span><span class="w-chip">已出貨</span><span class="w-chip">全部</span></div>
-        <table class="wt"><tr><th>單號</th><th>通路組</th><th>金額</th><th>末五碼</th><th>操作</th></tr>
+        <table class="wt"><tr><th>單號</th><th>通路主</th><th>金額</th><th>末五碼</th><th>操作</th></tr>
           <tr><td>#2606</td><td>媽咪好物團</td><td>$18,000</td><td>45678・6/30</td><td><span class="st g">確認收款</span></td></tr>
           <tr><td>#2608</td><td>小美直播</td><td>$52,500</td><td>12345・7/01</td><td><span class="st g">確認收款</span></td></tr></table>
         <div class="col2" style="margin-top:8px">
@@ -375,18 +375,18 @@
           <div class="field"><label>出貨方式標記</label><div class="in"></div></div>
         </div>
         <div class="w-h">簽約管理</div>
-        <table class="wt"><tr><th>通路組 × 廠商</th><th>合約檔</th><th>操作</th></tr>
+        <table class="wt"><tr><th>通路主 × 廠商</th><th>合約檔</th><th>操作</th></tr>
           <tr><td>小美直播 × K-Beauty</td><td>📎 已上傳・6/25</td><td><span class="st g">已簽約 ✓</span></td></tr>
           <tr><td>媽咪好物團 × 泰國零食工廠</td><td>—</td><td><span class="st b">上傳合約＋標記簽約</span></td></tr></table>
       </div>
-      <div class="note"><b>邏輯：</b>核對銀行入帳→點確認→訂單轉備貨、登記發票號。簽約管理：上傳合約掃描檔＋標記「已簽約」即解鎖該通路組對該廠商的下單權。</div>
+      <div class="note"><b>邏輯：</b>核對銀行入帳→點確認→訂單轉備貨、登記發票號。簽約管理：上傳合約掃描檔＋標記「已簽約」即解鎖該通路主對該廠商的下單權。</div>
     </div>
 
     <div class="frame">
-      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">13 訂閱管理（團購組）</span><span class="tag">管理後台</span></div>
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">13 訂閱管理（團購主）</span><span class="tag">管理後台</span></div>
       <div class="scr">
         <div class="kpi"><div>試用中<div class="n">18</div></div><div>已付費<div class="n">7</div></div><div>7日內到期<div class="n">4</div></div><div>已鎖定<div class="n">3</div></div></div>
-        <table class="wt"><tr><th>團購組</th><th>狀態</th><th>到期日</th><th>操作</th></tr>
+        <table class="wt"><tr><th>團購主</th><th>狀態</th><th>到期日</th><th>操作</th></tr>
           <tr><td>媽咪好物團</td><td><span class="st b">試用中</span></td><td>7/28</td><td><span class="st g">開通付費</span> <span class="st gy">調整到期日</span></td></tr>
           <tr><td>市場團購王</td><td><span class="st r">已到期鎖定</span></td><td>6/25</td><td><span class="st g">收款後開通</span></td></tr>
           <tr><td>好康報報團</td><td><span class="st g">付費中</span></td><td>9/30</td><td><span class="st gy">調整到期日</span></td></tr></table>
@@ -443,10 +443,133 @@
     </div>
   </div>
 
+  <div class="frame" style="margin-top:26px">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">整體意見</span><span class="tag">總結</span></div>
+    <div class="scr" style="padding-bottom:4px">
+      <div style="font-size:12px;color:var(--sub)">動線順不順？缺什麼畫面？優先順序要不要調？寫在下方意見欄。</div>
+    </div>
+  </div>
+
   <p style="font-size:12px;color:var(--muted);margin-top:36px;border-top:0.5px solid var(--line);padding-top:14px">
     對應 PRD v1.3 · Phase 0 範圍 · 2026-07-02 · 灰盒為佔位示意，實際視覺與文案於 UI 設計階段定稿。<br>
     Phase 1 預告（不在本圖）：基本庫存、直播價自動排程、LINE API 推播、AI 文案、儀表板排行、對帳報表、退換貨協作工單（待與泡泡討論）。
   </p>
 </div>
+
+<div class="fbbar">
+  <span class="fbcount" id="fbCount">尚無意見</span>
+  <button class="fbbtn" id="fbCopy">彙整全部意見，複製給 Miru →</button>
+</div>
+
+<dialog id="fbDlg">
+  <div class="fbmodal">
+    <h3>意見彙整</h3>
+    <p>已複製到剪貼簿（若沒成功可手動全選複製），貼回聊天視窗即可。</p>
+    <textarea class="fbout" id="fbOut" readonly></textarea>
+    <div class="fbrow">
+      <span class="fbok" id="fbCopied" style="display:none">已複製 ✓</span>
+      <button class="fbbtn2" id="fbClose">關閉</button>
+      <button class="fbbtn" id="fbCopyAgain">再複製一次</button>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .fb{border-top:0.5px dashed var(--line);background:#f7faf7;padding:10px 14px}
+  .fb label{display:block;font-size:11.5px;color:var(--green);font-weight:600;margin-bottom:5px}
+  .fb textarea{width:100%;min-height:44px;border:1px dashed #bcd8c8;border-radius:6px;padding:8px 10px;
+    font-family:inherit;font-size:12.5px;color:var(--ink);background:#fff;resize:vertical;box-sizing:border-box}
+  .fb textarea:focus{outline:none;border-color:var(--green);border-style:solid}
+  .fb textarea.filled{border-style:solid;border-color:#8fc4a8;background:#fbfffc}
+  .fbbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--frame);border-top:0.5px solid var(--line);
+    padding:10px 16px;display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .fbcount{font-size:12.5px;color:var(--sub)}
+  .fbbtn{font-size:14px;font-weight:600;padding:10px 18px;border-radius:9px;border:none;background:var(--green);color:#fff;cursor:pointer;font-family:inherit}
+  .fbbtn:hover{opacity:.9}
+  .fbbtn2{font-size:13.5px;padding:9px 16px;border-radius:9px;border:0.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;font-family:inherit}
+  dialog#fbDlg{border:none;border-radius:14px;padding:0;max-width:640px;width:92%;background:var(--frame);color:var(--ink)}
+  dialog#fbDlg::backdrop{background:rgba(0,0,0,.45)}
+  .fbmodal{padding:22px}
+  .fbmodal h3{margin:0 0 8px;font-size:17px}
+  .fbmodal p{font-size:13px;color:var(--sub);margin:0 0 12px}
+  .fbout{width:100%;min-height:240px;font-family:ui-monospace,Menlo,monospace;font-size:12px;border:0.5px solid var(--line);
+    border-radius:8px;padding:12px;background:var(--bg);color:var(--ink);white-space:pre-wrap;box-sizing:border-box}
+  .fbrow{display:flex;gap:10px;margin-top:12px;justify-content:flex-end;align-items:center}
+  .fbok{color:var(--green);font-size:13px;margin-right:auto}
+  .wrap{padding-bottom:150px !important}
+</style>
+
+<script>
+(function(){
+  var KEY = 'wireframe_feedback_v1';
+  var saved = {};
+  try{ saved = JSON.parse(localStorage.getItem(KEY) || '{}'); }catch(e){ saved = {}; }
+
+  document.querySelectorAll('.frame').forEach(function(frame){
+    var t = frame.querySelector('.bar .t');
+    if(!t) return;
+    var label = t.textContent.trim();
+    var box = document.createElement('div');
+    box.className = 'fb';
+    var lab = document.createElement('label');
+    lab.textContent = '💬 泡泡意見（選填）';
+    var ta = document.createElement('textarea');
+    ta.className = 'fbin';
+    ta.setAttribute('data-frame', label);
+    ta.placeholder = '對這個畫面的想法、要改的地方…';
+    box.appendChild(lab); box.appendChild(ta);
+    frame.appendChild(box);
+  });
+
+  var inputs = Array.prototype.slice.call(document.querySelectorAll('.fbin'));
+  inputs.forEach(function(ta){
+    var k = ta.getAttribute('data-frame');
+    if(saved[k]) ta.value = saved[k];
+    ta.classList.toggle('filled', !!ta.value.trim());
+    ta.addEventListener('input', function(){
+      ta.classList.toggle('filled', !!ta.value.trim());
+      persist(); updateCount();
+    });
+  });
+
+  function persist(){
+    var d = {};
+    inputs.forEach(function(ta){ if(ta.value.trim()) d[ta.getAttribute('data-frame')] = ta.value.trim(); });
+    localStorage.setItem(KEY, JSON.stringify(d));
+  }
+  function updateCount(){
+    var n = inputs.filter(function(ta){ return ta.value.trim(); }).length;
+    document.getElementById('fbCount').textContent = n ? ('已填 ' + n + ' 則意見') : '尚無意見';
+  }
+  updateCount();
+
+  function buildText(){
+    var lines = ['這是泡泡對 Phase 0 線框圖的意見，請據此修改：',''];
+    var n = 0;
+    inputs.forEach(function(ta){
+      if(ta.value.trim()){ n++; lines.push('【' + ta.getAttribute('data-frame') + '】' + ta.value.trim()); lines.push(''); }
+    });
+    if(!n) return null;
+    return lines.join('\n').trim();
+  }
+  function copyText(txt){
+    var out = document.getElementById('fbOut');
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ document.getElementById('fbCopied').style.display='inline'; })
+        .catch(function(){ out.focus(); out.select(); document.execCommand('copy'); document.getElementById('fbCopied').style.display='inline'; });
+    } else { out.focus(); out.select(); document.execCommand('copy'); document.getElementById('fbCopied').style.display='inline'; }
+  }
+  document.getElementById('fbCopy').addEventListener('click', function(){
+    var txt = buildText();
+    if(!txt){ alert('還沒有填任何意見喔'); return; }
+    document.getElementById('fbOut').value = txt;
+    document.getElementById('fbCopied').style.display='none';
+    document.getElementById('fbDlg').showModal();
+    copyText(txt);
+  });
+  document.getElementById('fbCopyAgain').addEventListener('click', function(){ copyText(document.getElementById('fbOut').value); });
+  document.getElementById('fbClose').addEventListener('click', function(){ document.getElementById('fbDlg').close(); });
+})();
+</script>
 </body>
 </html>
