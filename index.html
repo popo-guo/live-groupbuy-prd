@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國際直播團購平台 · PRD 需求問卷</title>
+<style>
+  :root{
+    --bg:#faf9f5; --card:#ffffff; --ink:#1f1e1c; --sub:#6b6a64; --muted:#9a988f;
+    --line:#e7e5dd; --line2:#d6d3c8; --accent:#3b6bd8; --accent-bg:#eaf1fd; --accent-line:#b8cdf3;
+    --amber:#b5771a; --amber-bg:#fbf0dc; --amber-line:#e8cf9c;
+    --radius:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#22211e; --card:#2b2a26; --ink:#f2f0ea; --sub:#b3b1a8; --muted:#84827a;
+      --line:#3a3833; --line2:#4a473f; --accent:#7ba3f0; --accent-bg:#2c3550; --accent-line:#41527d;
+      --amber:#e0aa5a; --amber-bg:#3a3220; --amber-line:#5c4d2e; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 120px}
+  header{margin-bottom:8px}
+  h1{font-size:24px;font-weight:600;margin:0 0 6px}
+  .lead{font-size:14px;color:var(--sub);margin:0 0 4px}
+  .progress{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0 10px;margin-bottom:6px;border-bottom:0.5px solid var(--line)}
+  .bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+  .pct{font-size:13px;color:var(--sub);margin-top:6px}
+  .sec{margin:26px 0 4px;font-size:16px;font-weight:600;color:var(--ink);border-top:0.5px solid var(--line);padding-top:18px}
+  .sec small{font-weight:400;color:var(--muted);font-size:13px;margin-left:6px}
+  .q{background:var(--card);border:0.5px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0}
+  .qlabel{font-size:14.5px;font-weight:500;margin-bottom:10px}
+  .tag{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px;border:0.5px solid var(--line2);border-radius:99px;padding:1px 8px;white-space:nowrap}
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{font-size:13.5px;padding:8px 13px;border-radius:8px;border:0.5px solid var(--line2);
+    background:transparent;color:var(--ink);cursor:pointer;line-height:1.35;text-align:left;transition:.12s;font-family:inherit}
+  .pill:hover{border-color:var(--muted)}
+  .pill.on{background:var(--accent-bg);border-color:var(--accent-line);color:var(--accent);font-weight:500}
+  .pill.eng{border-style:dashed}
+  .pill.eng.on{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)}
+  .qnote{margin-top:11px}
+  .qnote label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+  .qnote textarea{min-height:38px;font-size:13px;margin-top:0}
+  textarea{width:100%;min-height:70px;margin-top:4px;padding:10px 12px;border-radius:8px;
+    border:0.5px solid var(--line2);background:transparent;color:var(--ink);font-family:inherit;font-size:14px;resize:vertical}
+  textarea:focus,input:focus{outline:none;border-color:var(--accent)}
+  .bar-actions{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:0.5px solid var(--line);
+    padding:12px 20px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:10}
+  .btn{font-size:14.5px;font-weight:500;padding:11px 20px;border-radius:9px;cursor:pointer;font-family:inherit;border:0.5px solid var(--line2);background:transparent;color:var(--ink)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn:hover{opacity:.9}
+  .hint{font-size:12.5px;color:var(--muted);text-align:center;margin-top:2px;width:100%}
+  dialog{border:none;border-radius:14px;padding:0;max-width:640px;width:92%;background:var(--card);color:var(--ink)}
+  dialog::backdrop{background:rgba(0,0,0,.45)}
+  .modal{padding:22px}
+  .modal h3{margin:0 0 10px;font-size:17px}
+  .modal p{font-size:13.5px;color:var(--sub);margin:0 0 12px}
+  .out{width:100%;min-height:260px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    border:0.5px solid var(--line2);border-radius:8px;padding:12px;background:var(--bg);color:var(--ink);white-space:pre;overflow:auto}
+  .modal .row{display:flex;gap:10px;margin-top:14px;justify-content:flex-end;flex-wrap:wrap}
+  .ok{color:#2c8a5a;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>國際直播團購平台 · PRD 需求問卷</h1>
+    <p class="lead">共 32 題，分十大區塊。單選點一下切換；標「可複選」的可勾多個。前 4 題已預填第一輪答案，可修改。</p>
+    <p class="lead">填完按底部「產生答案」，把內容複製後貼回聊天視窗給我，我就開始寫 PRD。未答的題我會標為待確認並提出建議。</p>
+  </header>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="pct" id="pct">已答 0 / 32 題</div>
+  </div>
+
+  <div id="form"></div>
+
+  <div class="q">
+    <div class="qlabel">其他想補充的需求、限制或想法（選填）</div>
+    <textarea id="note" placeholder="例如：預算範圍、既有系統/競品、法遵要求、團隊人力、期望上線日…"></textarea>
+  </div>
+</div>
+
+<div class="bar-actions">
+  <button class="btn" id="resetBtn">清除全部</button>
+  <button class="btn primary" id="genBtn">產生答案 →</button>
+  <div class="hint">填答會自動存在這台裝置的瀏覽器，重開不會不見。</div>
+</div>
+
+<dialog id="dlg">
+  <div class="modal">
+    <h3>你的答案</h3>
+    <p>按「複製」後，回到聊天視窗貼上傳給我即可。</p>
+    <textarea class="out" id="out" readonly></textarea>
+    <div class="row">
+      <span class="ok" id="copiedMsg" style="display:none;margin-right:auto">已複製 ✓</span>
+      <button class="btn" id="downloadBtn">下載為 .txt</button>
+      <button class="btn" id="closeBtn">關閉</button>
+      <button class="btn primary" id="copyBtn">複製到剪貼簿</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const DATA = [
+  {sec:"一、商業定位與範圍", icon:"🎯"},
+  {name:"MVP優先範圍", q:"1. MVP 最先開發範圍？", multi:false, pre:["B端優先（廠商後台＋選品大廳）"], opts:["B端優先（廠商後台＋選品大廳）","直播功能整合最優先","含消費者端全部一起做","先用表格驗證3-5筆交易"]},
+  {name:"首發市場", q:"2. 首發市場？", multi:false, pre:["台灣先行驗證"], opts:["台灣先行驗證","台灣＋東南亞同步","華語圈全體","一開始就全球"]},
+  {name:"收益模式", q:"3. 收益模式核心？", tag:"可複選", multi:true, pre:["B2B批貨議價（非抽傭）","營業額分潤（抽成）","技術股＋營業額分潤"], opts:["B2B批貨議價（非抽傭）","營業額分潤（抽成）","技術股＋營業額分潤","月費訂閱（廠商/直播主）"]},
+  {name:"納入角色", q:"4. 平台使用者角色？", tag:"可複選", multi:true, pre:["廠商／品牌","直播主","團購主","消費者（一般用戶）"], opts:["廠商／品牌","直播主","團購主","消費者（一般用戶）"]},
+  {name:"平台定位傾向", q:"5. 兩份提案的定位，你比較傾向哪一種？", multi:false, opts:["偏B2B媒合（提案版：對帳、信用背書、非抽傭）","偏直播團購交易（會議版：團購價/直播價、分潤）","兩者並重，一站整合"]},
+
+  {sec:"二、定價機制", icon:"🏷️"},
+  {name:"雙價格區隔", q:"6. 團購價 vs 直播價 如何區隔？", multi:false, opts:["直播價更低、僅直播中限時享有","團購價依人數階梯、直播價固定優惠","兩者獨立、由廠商自訂","請你幫我設計雙價機制"]},
+  {name:"梯級定價門檻", q:"7. 批發梯級定價的門檻依據？", multi:false, opts:["依單次採購數量","依累積採購量（月/季）","依團購集單人數","混合（單次＋累積）"]},
+  {name:"最低毛利門檻", q:"8. 系統「最低毛利門檻」如何運作？", multi:false, opts:["平台統一設最低毛利%","依商品類別分別設定","廠商自訂、平台審核","請你幫我設計毛利控管"]},
+  {name:"底價透明度", q:"9. 批發底價的可見範圍？", multi:false, opts:["直播主/團購主可見底價","僅見建議售價與利潤空間","需通過審核/簽約後才可見"]},
+
+  {sec:"三、選品與媒合", icon:"🤝"},
+  {name:"媒合建立方式", q:"10. 選完商品後如何建立合作？", multi:false, opts:["發合作邀約→廠商確認","直接按批發價下單（即時）","總部居中媒合審核","先索取樣品/驗貨再合作"]},
+  {name:"直播主分潤方式", q:"11. 直播主的分潤／利潤怎麼算？", multi:false, opts:["賺價差（售價減批發價）","固定佣金%","價差＋平台獎金","請你幫我設計分潤"]},
+  {name:"樣品驗貨機制", q:"12. 是否提供樣品／驗貨機制？", multi:false, opts:["提供樣品申請流程","平台代驗貨並背書","MVP先不做，之後補"]},
+  {name:"直播影片上架策略", q:"13. 直播影片上架策略？", tag:"會議待決", multi:false, opts:["直播結束後存檔可回放購買","剪成短影音導流商品","僅限直播當下、不留存","請你幫我建議"]},
+
+  {sec:"四、直播技術", icon:"📡"},
+  {name:"直播管道", q:"14. 直播用哪種方式？", tag:"可複選", multi:true, opts:["串接FB/IG直播","串接YouTube","平台自建直播（RTMP/WebRTC）","尚未決定，需你建議"]},
+  {name:"直播下單方式", q:"15. 直播中如何下單？", multi:false, opts:["留言關鍵字＋號碼自動接單","直播畫面內購物車/浮動視窗","導流到LINE/網頁下單","以上都要"]},
+
+  {sec:"五、廠商後台", icon:"🏬"},
+  {name:"提品方式", q:"16. 廠商如何提品／上架？", multi:false, opts:["完全自助上架、系統自動控管","自助上架但需平台審核","平台團隊代為建檔"]},
+  {name:"商品資訊需求", q:"17. 商品資料需要哪些欄位？", tag:"可複選", multi:true, opts:["多語系商品資訊","多幣別定價","規格/庫存/批號","報關/產地/認證資訊"]},
+  {name:"廠商審核背書", q:"18. 廠商信用背書／審核？", multi:false, opts:["平台審核並給信用評等","僅基本營登驗證","MVP先不做審核"]},
+
+  {sec:"六、金流", icon:"💳"},
+  {name:"金流串接", q:"19. 金流串接對象？", tag:"可複選", multi:true, opts:["綠界/藍新（台灣）","信用卡/Apple Pay","Stripe（跨境）","貨到付款/超商"]},
+  {name:"撥款對帳", q:"20. 金流撥款與對帳方式？", multi:false, opts:["平台代收代付、統一撥款","廠商直收、平台僅媒合","請你幫我建議合規做法"]},
+  {name:"跨境結算", q:"21. 跨境／多幣別結算？", multi:false, opts:["MVP單一幣別（台幣）","多幣別顯示、單一幣別結算","完整多幣別結算"]},
+
+  {sec:"七、物流與售後", icon:"🚚"},
+  {name:"出貨模式", q:"22. 出貨模式？", tag:"泡泡掌握出貨", multi:false, opts:["泡泡集運/統一出貨","廠商直寄消費者","海外倉+在地配送","多模式並存"]},
+  {name:"庫存ERP", q:"23. 庫存／ERP 何時做？", multi:false, opts:["第二階段（消費者端）才做","MVP需基本庫存","串接現成ERP"]},
+  {name:"退換貨糾紛", q:"24. 退換貨與糾紛處理？", multi:false, opts:["平台居中處理並提供保障","廠商自理、平台僅記錄","請你幫我設計流程"]},
+
+  {sec:"八、通知與行銷", icon:"🔔"},
+  {name:"LINE推播用途", q:"25. LINE 推播／小程序用途？", tag:"可複選", multi:true, opts:["開播/優惠通知（OA群發）","訂單/物流狀態通知","LIFF內下單/會員","團購集單提醒"]},
+  {name:"AI文案範圍", q:"26. AI 文案生成範圍？", tag:"可複選", multi:true, opts:["商品描述文案","直播腳本/話術","社群貼文/推播文","多語翻譯"]},
+
+  {sec:"九、後台數據與國際化", icon:"📊"},
+  {name:"儀表板指標", q:"27. 總部儀表板要追蹤哪些？", tag:"可複選", multi:true, opts:["媒合數/成交預估","GMV/營收/分潤","直播成效（觀看/轉換）","廠商/直播主排行"]},
+  {name:"權限分級", q:"28. 後台權限分級需求？", multi:false, opts:["管理後台/廠商後台/直播主三層","需更細角色權限（RBAC）","MVP先簡單分級"]},
+  {name:"多語多幣時程", q:"29. 多語系／多幣別上線時程？", multi:false, opts:["MVP先中文台幣、架構預留","MVP即含多語多幣","第二階段再做"]},
+  {name:"第二階段擴展地區", q:"30. 第二階段優先擴展哪裡？", multi:false, opts:["馬來西亞/新加坡","越南/泰國","香港","視第一階段成效再定"]},
+
+  {sec:"十、專案執行", icon:"🚀"},
+  {name:"開發時程期望", q:"31. 開發時程期望？", tag:"會議提到兩週可上線", multi:false, opts:["兩週內先出可上線版本","1-2個月完整MVP","分階段、以品質為主"]},
+  {name:"技術交付偏好", q:"32. 技術與交付偏好？", multi:false, opts:["Miru全包架站與維運","要交付原始碼可自行接手","用低程式碼/現成SaaS加速","請你建議技術棧"]}
+];
+
+const KEY = "prd_questionnaire_v1";
+const form = document.getElementById('form');
+let saved = {};
+try{ saved = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(e){ saved = {}; }
+
+const questions = DATA.filter(d => d.name);
+
+DATA.forEach(item=>{
+  if(item.sec){
+    const h = document.createElement('div');
+    h.className = 'sec';
+    h.innerHTML = item.icon + ' ' + item.sec;
+    form.appendChild(h);
+    return;
+  }
+  const wrap = document.createElement('div');
+  wrap.className = 'q';
+  wrap.dataset.name = item.name;
+  wrap.dataset.multi = item.multi ? '1':'0';
+  const label = document.createElement('div');
+  label.className = 'qlabel';
+  label.innerHTML = item.q + (item.tag ? ' <span class="tag">'+item.tag+'</span>' : '');
+  wrap.appendChild(label);
+  const pills = document.createElement('div');
+  pills.className = 'pills';
+  const chosen = saved[item.name] || item.pre || [];
+  const allOpts = item.opts.concat(['給工程師決定']);
+  allOpts.forEach(opt=>{
+    const isEng = opt === '給工程師決定';
+    const b = document.createElement('button');
+    b.type='button'; b.className='pill'+(isEng?' eng':''); b.textContent=opt; b.dataset.val=opt;
+    if(chosen.indexOf(opt)>-1) b.classList.add('on');
+    b.addEventListener('click', ()=>{
+      if(isEng){
+        const was = b.classList.contains('on');
+        pills.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));
+        if(!was) b.classList.add('on');
+      } else {
+        const eng = pills.querySelector('.pill.eng'); if(eng) eng.classList.remove('on');
+        if(item.multi){ b.classList.toggle('on'); }
+        else{ pills.querySelectorAll('.pill').forEach(x=>x.classList.remove('on')); b.classList.add('on'); }
+      }
+      persist(); updateProgress();
+    });
+    pills.appendChild(b);
+  });
+  wrap.appendChild(pills);
+
+  const noteWrap = document.createElement('div');
+  noteWrap.className = 'qnote';
+  const nl = document.createElement('label'); nl.textContent = '備註（選填）';
+  const nt = document.createElement('textarea'); nt.className = 'qnoteInput';
+  nt.placeholder = '補充說明、條件、疑問，或想跟工程師說的話…';
+  if(saved.__notes && saved.__notes[item.name]) nt.value = saved.__notes[item.name];
+  nt.addEventListener('input', persist);
+  noteWrap.appendChild(nl); noteWrap.appendChild(nt);
+  wrap.appendChild(noteWrap);
+
+  form.appendChild(wrap);
+});
+
+const note = document.getElementById('note');
+if(saved.__note) note.value = saved.__note;
+note.addEventListener('input', persist);
+
+function collect(){
+  const res = {};
+  form.querySelectorAll('.q').forEach(q=>{
+    const name = q.dataset.name;
+    res[name] = Array.from(q.querySelectorAll('.pill.on')).map(p=>p.dataset.val);
+  });
+  return res;
+}
+function collectNotes(){
+  const notes = {};
+  form.querySelectorAll('.q').forEach(q=>{
+    const ta = q.querySelector('.qnoteInput');
+    if(ta && ta.value.trim()) notes[q.dataset.name] = ta.value.trim();
+  });
+  return notes;
+}
+function persist(){
+  const res = collect();
+  res.__note = note.value;
+  res.__notes = collectNotes();
+  localStorage.setItem(KEY, JSON.stringify(res));
+}
+function updateProgress(){
+  const res = collect();
+  const answered = questions.filter(item => (res[item.name]||[]).length>0).length;
+  const pct = Math.round(answered/questions.length*100);
+  document.getElementById('barFill').style.width = pct+'%';
+  document.getElementById('pct').textContent = '已答 '+answered+' / '+questions.length+' 題';
+}
+updateProgress();
+
+document.getElementById('genBtn').addEventListener('click', ()=>{
+  const res = collect();
+  const notes = collectNotes();
+  const lines = ['這是我在需求問卷填好的答案，請據此撰寫「國際直播團購平台」的 PRD：',''];
+  questions.forEach(item=>{
+    const v = res[item.name] || [];
+    let line = '【'+item.name+'】' + (v.length ? v.join('、') : '（未選，請你建議並標為待確認）');
+    if(notes[item.name]) line += '　▸備註：'+notes[item.name];
+    lines.push(line);
+  });
+  if(note.value.trim()){ lines.push(''); lines.push('【其他補充】'+note.value.trim()); }
+  document.getElementById('out').value = lines.join('\n');
+  document.getElementById('copiedMsg').style.display='none';
+  document.getElementById('dlg').showModal();
+});
+
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  const txt = document.getElementById('out').value;
+  try{ await navigator.clipboard.writeText(txt); }
+  catch(e){ const o=document.getElementById('out'); o.focus(); o.select(); document.execCommand('copy'); }
+  document.getElementById('copiedMsg').style.display='inline';
+});
+document.getElementById('downloadBtn').addEventListener('click', ()=>{
+  const txt = document.getElementById('out').value;
+  const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'PRD需求問卷答案.txt';
+  a.click();
+});
+document.getElementById('closeBtn').addEventListener('click', ()=> document.getElementById('dlg').close());
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  if(!confirm('確定要清除所有填答？')) return;
+  localStorage.removeItem(KEY);
+  location.reload();
+});
+</script>
+</body>
+</html>
