@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國際直播團購平台 · Phase 0 線框圖</title>
+<style>
+  :root{--bg:#f4f3ef;--ink:#2b2a27;--sub:#75736b;--muted:#a5a29a;--line:#d8d5cc;--frame:#ffffff;
+    --wire:#e9e7e0;--wire2:#dbd8cf;--blue:#3b6bd8;--blue-bg:#eaf1fd;--amber:#b5771a;--amber-bg:#fbf0dc;
+    --green:#2c8a5a;--green-bg:#e5f3ec;--red:#c04545;--red-bg:#faeaea}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 20px 100px}
+  h1{font-size:22px;font-weight:600;margin:0 0 4px}
+  .lead{font-size:13.5px;color:var(--sub);margin:0 0 18px}
+  nav{position:sticky;top:0;z-index:20;background:var(--bg);padding:10px 0;border-bottom:0.5px solid var(--line);margin-bottom:22px;display:flex;gap:8px;flex-wrap:wrap}
+  nav a{font-size:13px;color:var(--sub);text-decoration:none;padding:6px 12px;border:0.5px solid var(--line);border-radius:99px;background:var(--frame)}
+  nav a:hover{color:var(--blue);border-color:var(--blue)}
+  h2{font-size:17px;font-weight:600;margin:36px 0 4px;padding-top:10px}
+  h2 .role{font-size:11.5px;font-weight:500;padding:2px 10px;border-radius:99px;vertical-align:2px;margin-left:8px}
+  .r-ch{background:var(--blue-bg);color:var(--blue)}
+  .r-vn{background:var(--amber-bg);color:var(--amber)}
+  .r-ad{background:var(--green-bg);color:var(--green)}
+  .secdesc{font-size:13px;color:var(--sub);margin:0 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+  .frame{background:var(--frame);border:0.5px solid var(--line);border-radius:12px;overflow:hidden}
+  .bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:0.5px solid var(--line);background:#fbfaf7}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--wire2)}
+  .bar .t{font-size:12.5px;color:var(--sub);margin-left:6px;font-weight:500}
+  .bar .tag{margin-left:auto;font-size:10.5px;color:var(--muted);border:0.5px solid var(--line);padding:1px 8px;border-radius:99px}
+  .scr{padding:14px}
+  .note{font-size:12px;color:var(--sub);padding:10px 14px;border-top:0.5px dashed var(--line);background:#fdfcf9}
+  .note b{color:var(--blue);font-weight:500}
+  /* wireframe primitives */
+  .w-nav{display:flex;gap:8px;align-items:center;padding:8px 10px;background:var(--wire);border-radius:6px;margin-bottom:10px}
+  .w-logo{width:54px;height:16px;background:var(--wire2);border-radius:3px}
+  .w-mi{height:10px;background:var(--wire2);border-radius:3px;flex:0 0 44px}
+  .w-sp{flex:1}
+  .w-av{width:20px;height:20px;border-radius:50%;background:var(--wire2)}
+  .w-search{display:flex;align-items:center;gap:8px;border:1px dashed var(--wire2);border-radius:6px;padding:7px 10px;margin-bottom:10px;font-size:11.5px;color:var(--muted)}
+  .w-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .w-chip{font-size:10.5px;color:var(--sub);border:0.5px solid var(--wire2);border-radius:99px;padding:2px 9px;background:#fff}
+  .w-chip.on{background:var(--blue-bg);color:var(--blue);border-color:#b8cdf3}
+  .w-h{font-size:12px;font-weight:600;color:var(--ink);margin:10px 0 6px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .card{border:0.5px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+  .ph{position:relative;background:var(--wire);aspect-ratio:4/3}
+  .ph::before,.ph::after{content:"";position:absolute;left:6%;right:6%;top:50%;height:1px;background:var(--wire2)}
+  .ph::before{transform:rotate(18deg)} .ph::after{transform:rotate(-18deg)}
+  .ph .b{position:absolute;top:5px;left:5px;font-size:9px;background:var(--red-bg);color:var(--red);border-radius:3px;padding:0 5px;z-index:1}
+  .ph .b.hot{background:var(--amber-bg);color:var(--amber)}
+  .cbody{padding:7px 8px}
+  .l{height:8px;background:var(--wire);border-radius:3px;margin-bottom:5px}
+  .l.s{width:55%} .l.m{width:75%}
+  .price{font-size:10px;color:var(--sub);display:flex;flex-direction:column;gap:2px;margin-top:4px}
+  .price .wp{color:var(--ink);font-weight:600}
+  .price .pf{color:var(--green);font-weight:600}
+  .btn{display:inline-block;font-size:11px;border-radius:6px;padding:6px 14px;border:0.5px solid var(--line);color:var(--sub);background:#fff}
+  .btn.p{background:var(--blue);border-color:var(--blue);color:#fff}
+  .btn.full{display:block;text-align:center}
+  .row{display:flex;gap:8px;align-items:center}
+  .row.between{justify-content:space-between}
+  .col2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .field{margin-bottom:8px}
+  .field label{display:block;font-size:10.5px;color:var(--sub);margin-bottom:3px}
+  .field label .req{color:var(--red)}
+  .in{height:26px;border:1px dashed var(--wire2);border-radius:5px;background:#fff}
+  .in.ta{height:44px}
+  .upl{border:1.5px dashed var(--wire2);border-radius:6px;padding:10px;text-align:center;font-size:10.5px;color:var(--muted);background:#fdfdfb}
+  table.wt{width:100%;border-collapse:collapse;font-size:10.5px}
+  table.wt th{text-align:left;color:var(--muted);font-weight:500;padding:4px 6px;border-bottom:0.5px solid var(--line)}
+  table.wt td{padding:5px 6px;border-bottom:0.5px solid var(--wire);color:var(--sub)}
+  .st{font-size:9.5px;border-radius:99px;padding:1px 7px;white-space:nowrap}
+  .st.b{background:var(--blue-bg);color:var(--blue)}
+  .st.g{background:var(--green-bg);color:var(--green)}
+  .st.a{background:var(--amber-bg);color:var(--amber)}
+  .st.r{background:var(--red-bg);color:var(--red)}
+  .st.gy{background:var(--wire);color:var(--sub)}
+  .steps{display:flex;gap:4px;align-items:center;font-size:9.5px;color:var(--muted);flex-wrap:wrap;margin:8px 0}
+  .steps .s{border:0.5px solid var(--line);border-radius:99px;padding:2px 8px;background:#fff}
+  .steps .s.done{background:var(--green-bg);color:var(--green);border-color:transparent}
+  .steps .s.now{background:var(--blue-bg);color:var(--blue);border-color:transparent;font-weight:600}
+  .steps .ar{color:var(--wire2)}
+  .msg{border:0.5px solid var(--line);border-radius:8px;padding:7px 9px;font-size:10.5px;color:var(--sub);margin-bottom:6px;background:#fff}
+  .msg .who{font-size:9.5px;color:var(--muted);margin-bottom:3px}
+  .msg .who b{color:var(--blue);font-weight:600}
+  .msg.me{background:var(--blue-bg);border-color:#cddcf7}
+  .msg .img{display:inline-block;width:44px;height:34px;background:var(--wire);border-radius:4px;position:relative;margin-top:4px}
+  .lock{border:1px dashed var(--amber);background:var(--amber-bg);border-radius:8px;padding:12px;text-align:center;font-size:11px;color:var(--amber)}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+  .kpi>div{background:var(--wire);border-radius:6px;padding:8px;font-size:9.5px;color:var(--sub)}
+  .kpi .n{font-size:14px;font-weight:700;color:var(--ink)}
+  .side{display:grid;grid-template-columns:76px 1fr;gap:10px}
+  .smenu{background:var(--wire);border-radius:6px;padding:8px 6px;font-size:9.5px;color:var(--sub);display:flex;flex-direction:column;gap:7px}
+  .smenu span{padding:3px 5px;border-radius:4px}
+  .smenu span.on{background:#fff;color:var(--blue);font-weight:600}
+  .tier{display:flex;gap:5px;margin:6px 0}
+  .tier>div{flex:1;border:0.5px solid var(--line);border-radius:6px;padding:5px;text-align:center;font-size:9.5px;color:var(--sub);background:#fff}
+  .tier>div.on{border-color:var(--blue);background:var(--blue-bg);color:var(--blue)}
+  .tier .tp{font-weight:700;font-size:11px}
+  .live{border:1px solid var(--red);background:var(--red-bg);border-radius:6px;padding:6px 9px;font-size:10px;color:var(--red);display:flex;justify-content:space-between;align-items:center;margin:6px 0}
+  .anno{font-size:9px;color:#fff;background:var(--blue);border-radius:3px;padding:0 5px;vertical-align:2px;margin-left:4px}
+  @media(max-width:720px){.cards{grid-template-columns:repeat(2,1fr)}.kpi{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>國際直播團購平台 · Phase 0 線框圖</h1>
+  <p class="lead">依 PRD v1.3 的 Phase 0（兩週上線版）範圍繪製，共 14 個關鍵畫面。灰色＝佔位元素；<span class="anno" style="vertical-align:0">藍標</span>＝重點邏輯註記。供內部與泡泡討論用，非視覺定稿。</p>
+
+  <nav>
+    <a href="#ch">通路端（直播組/團購組）</a>
+    <a href="#vn">廠商後台</a>
+    <a href="#ad">管理後台</a>
+    <a href="#tk">工單系統</a>
+  </nav>
+
+  <h2 id="ch">通路端<span class="role r-ch">直播組／團購組</span></h2>
+  <p class="secdesc">手機優先。核心動線：選品 → 邀約 → 簽約（線下）→ 批發下單 → 匯款回報。</p>
+  <div class="grid">
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">01 註冊／登入</span><span class="tag">通路端</span></div>
+      <div class="scr">
+        <div class="w-nav"><div class="w-logo"></div><div class="w-sp"></div></div>
+        <div class="w-h">建立帳號（以「組」為單位）</div>
+        <div class="field"><label>組別類型 <span class="req">*</span></label>
+          <div class="w-chips"><span class="w-chip on">直播組</span><span class="w-chip">團購組</span></div></div>
+        <div class="col2">
+          <div class="field"><label>組名／名稱 <span class="req">*</span></label><div class="in"></div></div>
+          <div class="field"><label>聯絡人・電話 <span class="req">*</span></label><div class="in"></div></div>
+        </div>
+        <div class="field"><label>主要販售管道 <span class="req">*</span></label>
+          <div class="w-chips"><span class="w-chip on">FB</span><span class="w-chip on">IG</span><span class="w-chip">TikTok</span><span class="w-chip">蝦皮</span><span class="w-chip">LINE群</span></div></div>
+        <div class="field"><label>通路規模（粉絲數／群人數）</label><div class="in"></div></div>
+        <span class="btn p full">送出，等待平台審核</span>
+      </div>
+      <div class="note"><b>邏輯：</b>註冊即送審；管理員開通後，團購組自動取得 30 天免費試用。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">02 選品大廳（首頁）</span><span class="tag">通路端</span></div>
+      <div class="scr">
+        <div class="w-nav"><div class="w-logo"></div><div class="w-mi"></div><div class="w-mi"></div><div class="w-sp"></div><div class="w-av"></div></div>
+        <div class="w-search">🔍 搜尋商品／品牌／關鍵字</div>
+        <div class="w-chips"><span class="w-chip on">全部</span><span class="w-chip">美妝</span><span class="w-chip">食品</span><span class="w-chip">生活</span><span class="w-chip">3C</span><span class="w-chip">母嬰</span></div>
+        <div class="w-h">🔥 熱門商品<span class="anno">管理端可設精選</span></div>
+        <div class="cards">
+          <div class="card"><div class="ph"><span class="b">直播價</span></div><div class="cbody"><div class="l m"></div><div class="price"><span class="wp">批發 $320</span><span>建議售 $499</span><span class="pf">利潤 $179（36%）</span></div></div></div>
+          <div class="card"><div class="ph"><span class="b hot">階梯價</span></div><div class="cbody"><div class="l m"></div><div class="price"><span class="wp">批發 $180 起</span><span>建議售 $299</span><span class="pf">利潤 40%↑</span></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="price"><span class="wp">批發 $560</span><span>建議售 $880</span><span class="pf">利潤 $320（36%）</span></div></div></div>
+        </div>
+        <div class="w-h">🆕 上新專區<span class="anno">LINE 推播落地頁</span></div>
+        <div class="cards">
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+        </div>
+      </div>
+      <div class="note"><b>邏輯：</b>商品卡直接顯示「批發價・建議售價・利潤空間」三行——利潤空間是選品的主要決策依據，必須一眼可見。成本價任何地方不出現。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">03 商品詳情</span><span class="tag">通路端</span></div>
+      <div class="scr">
+        <div class="ph" style="aspect-ratio:16/7;border-radius:6px;margin-bottom:8px"></div>
+        <div class="l m" style="height:11px"></div>
+        <div class="w-chips"><span class="st g">產地：韓國</span><span class="st b">認證 ✓</span><span class="st a">PIF ✓</span></div>
+        <div class="live">🔴 直播價 $280（原批發 $320）<span>倒數 02:14:56</span></div>
+        <div class="price" style="font-size:12px;gap:3px;margin:8px 0">
+          <span class="wp" style="font-size:14px">批發價 $320</span>
+          <span>建議售價 $499</span>
+          <span class="pf">你的利潤空間 $179／件（36%）</span>
+        </div>
+        <div class="w-h">階梯批發價（單次採購量）<span class="anno">部分商品適用</span></div>
+        <div class="tier">
+          <div><div>50 件+</div><div class="tp">$320</div></div>
+          <div class="on"><div>100 件+</div><div class="tp">$300</div></div>
+          <div><div>300 件+</div><div class="tp">$275</div></div>
+        </div>
+        <div class="w-h">規格／庫存</div>
+        <table class="wt"><tr><th>規格</th><th>庫存</th><th>批號/效期</th></tr>
+          <tr><td>30ml</td><td>1,200</td><td>B2406 / 2027-06</td></tr>
+          <tr><td>50ml</td><td>640</td><td>B2406 / 2027-06</td></tr></table>
+        <div class="row" style="margin-top:10px">
+          <span class="btn full" style="flex:1">查看品牌館</span>
+          <span class="btn p full" style="flex:2">發起合作邀約</span>
+        </div>
+      </div>
+      <div class="note"><b>邏輯：</b>未簽約→主按鈕是「發起合作邀約」；已簽約→變成「批發下單」。直播價限時顯示倒數，逾期自動回批發價。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">04 品牌館</span><span class="tag">通路端</span></div>
+      <div class="scr">
+        <div class="row" style="margin-bottom:8px"><div class="w-av" style="width:38px;height:38px"></div>
+          <div style="flex:1"><div class="l m" style="height:10px"></div><div class="l s"></div></div>
+          <span class="st g">已簽約</span></div>
+        <div class="in ta" style="margin-bottom:8px"></div>
+        <div class="w-h">品牌熱門商品</div>
+        <div class="cards">
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+        </div>
+        <div class="w-h">全部商品（24）</div>
+        <div class="cards">
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div></div></div>
+        </div>
+      </div>
+      <div class="note"><b>邏輯：</b>品牌介紹＋熱門商品由廠商後台維護；右上顯示與此廠商的簽約狀態。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">05 批發下單</span><span class="tag">通路端・已簽約</span></div>
+      <div class="scr">
+        <div class="row" style="margin-bottom:8px"><div class="ph" style="width:52px;aspect-ratio:1;border-radius:6px"></div>
+          <div style="flex:1"><div class="l m"></div><div class="l s"></div></div></div>
+        <table class="wt"><tr><th>規格</th><th>數量</th><th>單價</th><th>小計</th></tr>
+          <tr><td>30ml</td><td>[ 100 ]</td><td>$300<span class="anno">階梯自動套用</span></td><td>$30,000</td></tr>
+          <tr><td>50ml</td><td>[ 50 ]</td><td>$450</td><td>$22,500</td></tr></table>
+        <div class="row between" style="margin:8px 0;font-size:12px"><span style="color:var(--sub)">出貨方式</span>
+          <span class="w-chips" style="margin:0"><span class="w-chip on">集運出貨</span><span class="w-chip">廠商直寄</span><span class="w-chip">海外倉</span></span></div>
+        <div class="row between" style="font-size:13px;font-weight:700"><span>應付總額</span><span>$52,500</span></div>
+        <div class="lock" style="margin-top:8px;background:var(--blue-bg);border-color:#b8cdf3;color:var(--blue)">
+          匯款帳戶：XX銀行 123-456-789012<br>請於 3 日內匯款並回報末五碼</div>
+        <div class="col2" style="margin-top:8px">
+          <div class="field"><label>匯款末五碼 <span class="req">*</span></label><div class="in"></div></div>
+          <div class="field"><label>匯款日期 <span class="req">*</span></label><div class="in"></div></div>
+        </div>
+        <span class="btn p full">送出訂單並回報匯款</span>
+      </div>
+      <div class="note"><b>邏輯：</b>MVP 不串金流——訂單產生後顯示公司匯款帳戶，通路組回報末五碼，管理端人工確認入帳後轉「備貨中」。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">06 我的訂單／我的合作</span><span class="tag">通路端</span></div>
+      <div class="scr">
+        <div class="w-chips"><span class="w-chip on">訂單</span><span class="w-chip">合作邀約</span></div>
+        <div class="steps"><span class="s done">待付款</span><span class="ar">→</span><span class="s done">已收款</span><span class="ar">→</span><span class="s now">備貨中</span><span class="ar">→</span><span class="s">已出貨</span><span class="ar">→</span><span class="s">完成</span></div>
+        <table class="wt"><tr><th>單號</th><th>廠商</th><th>金額</th><th>狀態</th></tr>
+          <tr><td>#2607</td><td>K-Beauty</td><td>$52,500</td><td><span class="st b">備貨中</span></td></tr>
+          <tr><td>#2606</td><td>日本雜貨屋</td><td>$18,000</td><td><span class="st a">待確認入帳</span></td></tr>
+          <tr><td>#2601</td><td>K-Beauty</td><td>$31,200</td><td><span class="st g">已出貨・宅配 123456</span></td></tr></table>
+        <div class="w-h" style="margin-top:12px">合作邀約狀態</div>
+        <table class="wt"><tr><th>廠商</th><th>發送日</th><th>狀態</th></tr>
+          <tr><td>K-Beauty</td><td>6/20</td><td><span class="st g">已簽約 ✓ 可下單</span></td></tr>
+          <tr><td>泰國零食工廠</td><td>6/30</td><td><span class="st a">待廠商回覆</span></td></tr></table>
+      </div>
+      <div class="note"><b>邏輯：</b>邀約→接受→（線下簽約）→管理員標記「已簽約」→該廠商全部商品解鎖下單。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">07 訂閱牆（團購組）</span><span class="tag">通路端・鎖定態</span></div>
+      <div class="scr">
+        <div class="w-nav"><div class="w-logo"></div><div class="w-sp"></div><div class="w-av"></div></div>
+        <div class="cards" style="filter:blur(0);opacity:.45">
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+          <div class="card"><div class="ph"></div><div class="cbody"><div class="l m"></div><div class="l s"></div></div></div>
+        </div>
+        <div class="lock" style="margin-top:10px">🔒 你的免費試用已於 7/28 到期<br>
+          訂閱後即可瀏覽完整海外市場商品與批發價<br><br>
+          <span class="btn p">聯繫平台開通訂閱</span></div>
+      </div>
+      <div class="note"><b>邏輯：</b>試用/訂閱到期→商品牆霧化、批發價與利潤空間隱藏。MVP 訂閱繳費走匯款＋管理端手動開通。<b>降級的確切範圍為待確認事項 #2。</b></div>
+    </div>
+  </div>
+
+  <h2 id="vn">廠商後台<span class="role r-vn">廠商／品牌</span></h2>
+  <p class="secdesc">桌面為主。核心動線：提品送審 → 上架 → 接邀約 → 接單出貨。</p>
+  <div class="grid">
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">08 提品表單</span><span class="tag">廠商後台</span></div>
+      <div class="scr">
+        <div class="side">
+          <div class="smenu"><span>總覽</span><span class="on">商品管理</span><span>品牌頁</span><span>合作邀約</span><span>訂單出貨</span><span>工單</span></div>
+          <div>
+            <div class="w-h" style="margin-top:0">新增商品（送審）</div>
+            <div class="col2">
+              <div class="field"><label>商品名稱 <span class="req">*</span></label><div class="in"></div></div>
+              <div class="field"><label>分類 <span class="req">*</span>（美妝→需 PIF）</label><div class="in"></div></div>
+            </div>
+            <div class="field"><label>規格 SKU（可多筆）：規格／庫存／批號／效期 <span class="req">*</span></label><div class="in"></div><div class="in" style="margin-top:4px"></div></div>
+            <div class="col2">
+              <div class="field"><label>成本報價（幣別＋金額）<span class="req">*</span></label><div class="in"></div></div>
+              <div class="field"><label>產地／報關資訊 <span class="req">*</span></label><div class="in"></div></div>
+            </div>
+            <div class="field"><label>商品描述（可用 AI 生成 <span class="anno">Phase 1</span>）</label><div class="in ta"></div></div>
+            <div class="col2">
+              <div class="field"><label>商品圖（多張）<span class="req">*</span></label><div class="upl">⬆ 拖曳或點擊上傳</div></div>
+              <div class="field"><label>認證文件／PIF <span class="req">*</span>（美妝必填）</label><div class="upl">⬆ PDF 上傳</div></div>
+            </div>
+            <div class="row"><span class="btn">存草稿</span><span class="btn p">送出審核</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="note"><b>邏輯：</b>分類選到化妝品等 PIF 類別時，PIF 欄位轉必填、未附擋送審。成本報價僅平台可見。多幣別欄位先保留、前台只顯示台幣。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">09 商品列表＋邀約管理</span><span class="tag">廠商後台</span></div>
+      <div class="scr">
+        <div class="w-h" style="margin-top:0">我的商品</div>
+        <table class="wt"><tr><th>商品</th><th>狀態</th><th>庫存</th></tr>
+          <tr><td>膠原蛋白精華 30ml</td><td><span class="st g">已上架</span></td><td>1,200</td></tr>
+          <tr><td>洗顏慕斯</td><td><span class="st a">審核中</span></td><td>800</td></tr>
+          <tr><td>果乾禮盒</td><td><span class="st r">退件：缺產地證明</span></td><td>—</td></tr></table>
+        <div class="w-h" style="margin-top:12px">合作邀約</div>
+        <div class="msg"><div class="who"><b>直播組・小美直播</b> 6/30・粉絲 8.5萬・FB/IG</div>
+          您好，我們主打韓妝，想合作貴品牌精華液系列…
+          <div class="row" style="margin-top:6px"><span class="btn p">接受邀約</span><span class="btn">婉拒</span></div></div>
+        <div class="msg"><div class="who"><b>團購組・媽咪好物團</b> 6/28・LINE群 3,200人</div>
+          想詢問果乾禮盒團購配合…
+          <div class="row" style="margin-top:6px"><span class="st g">已接受 → 平台安排簽約中</span></div></div>
+      </div>
+      <div class="note"><b>邏輯：</b>廠商看得到邀約方的通路規模自介。接受後由平台居中完成線下簽約，廠商端顯示進度。</div>
+    </div>
+  </div>
+
+  <h2 id="ad">管理後台<span class="role r-ad">平台總部</span></h2>
+  <p class="secdesc">桌面。核心動線：審核（帳號/商品）→ 定價 → 確認入帳 → 標記簽約 → 營運管理。</p>
+  <div class="grid">
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">10 審核中心</span><span class="tag">管理後台</span></div>
+      <div class="scr">
+        <div class="side">
+          <div class="smenu"><span class="on">審核中心</span><span>定價管理</span><span>訂單金流</span><span>帳號管理</span><span>訂閱管理</span><span>工單</span><span>儀表板</span></div>
+          <div>
+            <div class="kpi"><div>待審廠商<div class="n">3</div></div><div>待審商品<div class="n">12</div></div><div>待審通路組<div class="n">5</div></div><div>待確認入帳<div class="n">2</div></div></div>
+            <div class="w-chips"><span class="w-chip on">商品審核</span><span class="w-chip">廠商開通</span><span class="w-chip">通路組開通</span></div>
+            <table class="wt"><tr><th>商品</th><th>廠商</th><th>PIF</th><th>操作</th></tr>
+              <tr><td>洗顏慕斯</td><td>K-Beauty</td><td><span class="st g">✓</span></td><td><span class="st b">通過</span> <span class="st r">退件</span></td></tr>
+              <tr><td>果乾禮盒</td><td>泰國零食工廠</td><td><span class="st gy">不需</span></td><td><span class="st b">通過</span> <span class="st r">退件</span></td></tr></table>
+          </div>
+        </div>
+      </div>
+      <div class="note"><b>邏輯：</b>三種審核（廠商營登／商品含法遵檢核／通路組開通）集中一處；退件需填原因回廠商。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">11 定價管理（核心）</span><span class="tag">管理後台</span></div>
+      <div class="scr">
+        <div class="row" style="margin-bottom:8px"><div class="ph" style="width:46px;aspect-ratio:1;border-radius:6px"></div>
+          <div style="flex:1"><div class="l m"></div><div class="l s"></div></div><span class="st a">美妝・毛利門檻 25%</span></div>
+        <table class="wt">
+          <tr><th>價格層</th><th>金額</th><th>說明</th></tr>
+          <tr><td>成本價 🔒</td><td>$230</td><td>僅管理端可見</td></tr>
+          <tr><td>平台加價</td><td>+$90（+39%）</td><td>金額或 % 擇一</td></tr>
+          <tr><td><b>批發價</b></td><td><b>$320</b></td><td>通路組可見</td></tr>
+          <tr><td>建議售價</td><td>$499</td><td>通路組可見</td></tr>
+        </table>
+        <div class="lock" style="background:var(--green-bg);border-color:var(--green);color:var(--green);margin:8px 0">✓ 平台毛利 28%，高於「美妝」類別門檻 25%</div>
+        <div class="w-h">階梯價設定（單次採購量）</div>
+        <div class="tier"><div><div>50+</div><div class="tp">$320</div></div><div><div>100+</div><div class="tp">$300</div></div><div><div>300+</div><div class="tp">$275</div></div></div>
+        <div class="w-h">直播價排程</div>
+        <div class="row"><div class="in" style="flex:1"></div><span style="font-size:10px;color:var(--muted)">$280・7/05 20:00–23:00</span></div>
+      </div>
+      <div class="note"><b>邏輯：</b>批發價＝成本＋加價；若毛利低於該類別門檻，系統擋存檔並提示（PRD F-PRC-02）。階梯價最低一級也要過門檻檢核。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">12 訂單金流（確認入帳）</span><span class="tag">管理後台</span></div>
+      <div class="scr">
+        <div class="w-chips"><span class="w-chip on">待確認入帳 2</span><span class="w-chip">備貨中</span><span class="w-chip">已出貨</span><span class="w-chip">全部</span></div>
+        <table class="wt"><tr><th>單號</th><th>通路組</th><th>金額</th><th>末五碼</th><th>操作</th></tr>
+          <tr><td>#2606</td><td>媽咪好物團</td><td>$18,000</td><td>45678・6/30</td><td><span class="st g">確認收款</span></td></tr>
+          <tr><td>#2608</td><td>小美直播</td><td>$52,500</td><td>12345・7/01</td><td><span class="st g">確認收款</span></td></tr></table>
+        <div class="col2" style="margin-top:8px">
+          <div class="field"><label>發票號碼（收款後登記）</label><div class="in"></div></div>
+          <div class="field"><label>出貨方式標記</label><div class="in"></div></div>
+        </div>
+        <div class="w-h">簽約管理</div>
+        <table class="wt"><tr><th>通路組 × 廠商</th><th>合約檔</th><th>操作</th></tr>
+          <tr><td>小美直播 × K-Beauty</td><td>📎 已上傳・6/25</td><td><span class="st g">已簽約 ✓</span></td></tr>
+          <tr><td>媽咪好物團 × 泰國零食工廠</td><td>—</td><td><span class="st b">上傳合約＋標記簽約</span></td></tr></table>
+      </div>
+      <div class="note"><b>邏輯：</b>核對銀行入帳→點確認→訂單轉備貨、登記發票號。簽約管理：上傳合約掃描檔＋標記「已簽約」即解鎖該通路組對該廠商的下單權。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">13 訂閱管理（團購組）</span><span class="tag">管理後台</span></div>
+      <div class="scr">
+        <div class="kpi"><div>試用中<div class="n">18</div></div><div>已付費<div class="n">7</div></div><div>7日內到期<div class="n">4</div></div><div>已鎖定<div class="n">3</div></div></div>
+        <table class="wt"><tr><th>團購組</th><th>狀態</th><th>到期日</th><th>操作</th></tr>
+          <tr><td>媽咪好物團</td><td><span class="st b">試用中</span></td><td>7/28</td><td><span class="st g">開通付費</span> <span class="st gy">調整到期日</span></td></tr>
+          <tr><td>市場團購王</td><td><span class="st r">已到期鎖定</span></td><td>6/25</td><td><span class="st g">收款後開通</span></td></tr>
+          <tr><td>好康報報團</td><td><span class="st g">付費中</span></td><td>9/30</td><td><span class="st gy">調整到期日</span></td></tr></table>
+      </div>
+      <div class="note"><b>邏輯：</b>MVP 不串金流——月費同樣走匯款，管理員收款後手動延長到期日。到期前 7 天 LINE 提醒（Phase 1 自動化）。</div>
+    </div>
+  </div>
+
+  <h2 id="tk">工單系統<span class="role r-ch">通路端/廠商</span><span class="role r-ad">管理端</span></h2>
+  <p class="secdesc">系統使用問題回報：開單（附截圖）→ 平台處理＋留言往來 → 回報者確認簽核結案。</p>
+  <div class="grid">
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">14a 開單＋我的工單</span><span class="tag">通路端/廠商</span></div>
+      <div class="scr">
+        <div class="w-h" style="margin-top:0">回報系統問題</div>
+        <div class="col2">
+          <div class="field"><label>問題類型 <span class="req">*</span></label>
+            <div class="w-chips"><span class="w-chip on">系統異常</span><span class="w-chip">操作問題</span><span class="w-chip">資料錯誤</span><span class="w-chip">功能建議</span></div></div>
+          <div class="field"><label>發生頁面</label><div class="in"></div></div>
+        </div>
+        <div class="field"><label>問題描述 <span class="req">*</span></label><div class="in ta"></div></div>
+        <div class="field"><label>問題截圖（可多張）</label><div class="upl">⬆ 上傳截圖 jpg/png/heic</div></div>
+        <span class="btn p">送出工單</span>
+        <div class="w-h" style="margin-top:12px">我的工單</div>
+        <table class="wt"><tr><th>#</th><th>標題</th><th>狀態</th></tr>
+          <tr><td>T-031</td><td>下單頁數量無法輸入</td><td><span class="st a">已處理・待我確認</span></td></tr>
+          <tr><td>T-028</td><td>商品圖顯示錯誤</td><td><span class="st b">處理中</span></td></tr>
+          <tr><td>T-019</td><td>建議增加匯出功能</td><td><span class="st gy">已結案</span></td></tr></table>
+      </div>
+      <div class="note"><b>邏輯：</b>各角色僅見自己開的工單。</div>
+    </div>
+
+    <div class="frame">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">14b 工單詳情（留言＋結案簽核）</span><span class="tag">雙向</span></div>
+      <div class="scr">
+        <div class="row between" style="margin-bottom:6px"><b style="font-size:12px">T-031 下單頁數量無法輸入</b><span class="st a">已處理・待確認</span></div>
+        <div class="steps"><span class="s done">待處理</span><span class="ar">→</span><span class="s done">處理中</span><span class="ar">→</span><span class="s now">已處理(待簽核)</span><span class="ar">→</span><span class="s">已結案</span></div>
+        <div class="msg"><div class="who"><b>小美直播（回報者）</b> 7/01 14:02</div>
+          在批發下單頁輸入數量沒反應，畫面如下
+          <span class="img"></span><span class="img"></span></div>
+        <div class="msg me"><div class="who"><b>平台客服・工程</b> 7/01 15:30</div>
+          已重現問題，為 iOS Safari 相容性 bug，修復中。</div>
+        <div class="msg me"><div class="who"><b>平台客服・工程</b> 7/02 10:15</div>
+          已修復並部署，請再測試看看 🙏 → 狀態改為「已處理」</div>
+        <div class="in" style="margin:8px 0"></div>
+        <div class="row">
+          <span class="btn">留言回覆／附圖</span>
+          <span class="btn p">✓ 確認結案（簽核）</span>
+          <span class="btn" style="color:var(--red);border-color:var(--red)">未解決，退回</span>
+        </div>
+      </div>
+      <div class="note"><b>邏輯：</b>平台標「已處理」後由回報者簽核結案；未解決可退回處理中；逾 7 天未確認自動結案。管理端另有全覽列表＋指派負責人＋優先級（畫面同列表型，略）。</div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--muted);margin-top:36px;border-top:0.5px solid var(--line);padding-top:14px">
+    對應 PRD v1.3 · Phase 0 範圍 · 2026-07-02 · 灰盒為佔位示意，實際視覺與文案於 UI 設計階段定稿。<br>
+    Phase 1 預告（不在本圖）：基本庫存、直播價自動排程、LINE API 推播、AI 文案、儀表板排行、對帳報表、退換貨協作工單（待與泡泡討論）。
+  </p>
+</div>
+</body>
+</html>
