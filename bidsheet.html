@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>直播標單 · 三種設計方案</title>
+<style>
+  :root{--bg:#f4f3ef;--ink:#2b2a27;--sub:#75736b;--muted:#a5a29a;--line:#d8d5cc;--card:#fff;
+    --blue:#3b6bd8;--blue-bg:#eaf1fd;--blue-line:#b8cdf3;--amber:#b5771a;--amber-bg:#fbf0dc;
+    --green:#2c8a5a;--green-bg:#e5f3ec;--red:#c04545;--red-bg:#faeaea}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:28px 18px 150px}
+  h1{font-size:22px;font-weight:600;margin:0 0 6px}
+  .lead{font-size:13.5px;color:var(--sub);margin:0 0 20px}
+  h2{font-size:17px;font-weight:600;margin:34px 0 4px}
+  h2 .tag{font-size:11.5px;font-weight:500;padding:2px 10px;border-radius:99px;margin-left:8px;vertical-align:2px}
+  .t-a{background:var(--blue-bg);color:var(--blue)}
+  .t-b{background:var(--amber-bg);color:var(--amber)}
+  .t-c{background:var(--green-bg);color:var(--green)}
+  .desc{font-size:13px;color:var(--sub);margin:0 0 12px}
+  .paper{background:var(--card);border:0.5px solid var(--line);border-radius:12px;padding:22px 24px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .doc-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .doc-head h3{margin:0;font-size:16px}
+  .doc-head .no{font-size:11px;color:var(--muted)}
+  .expiry{border:1px solid var(--red);background:var(--red-bg);color:var(--red);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;text-align:center}
+  .expiry small{display:block;font-weight:400;font-size:10px}
+  .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 14px;font-size:12px;margin-bottom:12px}
+  .meta div{color:var(--sub)}
+  .meta b{color:var(--ink);font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0}
+  th{text-align:left;color:var(--muted);font-weight:500;padding:6px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:7px 6px;border-bottom:0.5px solid #eceae4;color:var(--ink)}
+  .pr{font-weight:700}
+  .pf{color:var(--green);font-weight:600}
+  .stamp{display:inline-block;font-size:10px;border-radius:99px;padding:2px 9px;font-weight:600}
+  .s-live{background:var(--red-bg);color:var(--red)}
+  .s-ok{background:var(--green-bg);color:var(--green)}
+  .s-exp{background:#eee;color:#999}
+  .terms{font-size:11px;color:var(--sub);border-top:0.5px dashed var(--line);margin-top:10px;padding-top:10px}
+  .terms li{margin-bottom:3px}
+  .confirm{display:flex;gap:10px;align-items:center;margin-top:12px;background:var(--blue-bg);border:0.5px solid var(--blue-line);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--blue);flex-wrap:wrap}
+  .confirm .btn{background:var(--blue);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:12.5px;font-weight:600}
+  .diff{background:var(--card);border:0.5px solid var(--line);border-radius:10px;padding:12px 16px;font-size:12.5px;color:var(--sub);margin:10px 0 0}
+  .diff b{color:var(--ink)}
+  .fb{margin-top:10px;background:#f7faf7;border:0.5px dashed #bcd8c8;border-radius:10px;padding:10px 14px}
+  .fb label{display:block;font-size:11.5px;color:var(--green);font-weight:600;margin-bottom:5px}
+  .fb textarea{width:100%;min-height:44px;border:1px dashed #bcd8c8;border-radius:6px;padding:8px 10px;font-family:inherit;font-size:12.5px;background:#fff;resize:vertical}
+  .fb textarea:focus{outline:none;border-color:var(--green);border-style:solid}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+  .pill{font-size:12.5px;padding:7px 13px;border-radius:8px;border:0.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;font-family:inherit}
+  .pill:hover{border-color:var(--muted)}
+  .pill.on{background:var(--blue-bg);border-color:var(--blue-line);color:var(--blue);font-weight:600}
+  .qlabel{font-size:14px;font-weight:600;margin:16px 0 4px}
+  .qhint{font-size:12px;color:var(--muted);margin:0 0 6px}
+  .fbbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:0.5px solid var(--line);padding:10px 16px;display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .fbbtn{font-size:14px;font-weight:600;padding:10px 18px;border-radius:9px;border:none;background:var(--green);color:#fff;cursor:pointer;font-family:inherit}
+  .fbbtn2{font-size:13.5px;padding:9px 16px;border-radius:9px;border:0.5px solid var(--line);background:#fff;cursor:pointer;font-family:inherit;color:var(--ink)}
+  .fbcount{font-size:12.5px;color:var(--sub)}
+  dialog{border:none;border-radius:14px;padding:0;max-width:640px;width:92%;background:var(--card);color:var(--ink)}
+  dialog::backdrop{background:rgba(0,0,0,.45)}
+  .modal{padding:22px}
+  .modal h3{margin:0 0 8px;font-size:17px}
+  .modal p{font-size:13px;color:var(--sub);margin:0 0 12px}
+  .out{width:100%;min-height:240px;font-family:ui-monospace,Menlo,monospace;font-size:12px;border:0.5px solid var(--line);border-radius:8px;padding:12px;background:var(--bg);white-space:pre-wrap}
+  .mrow{display:flex;gap:10px;margin-top:12px;justify-content:flex-end;align-items:center}
+  .ok{color:var(--green);font-size:13px;margin-right:auto;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>直播標單 · 三種設計方案</h1>
+  <p class="lead">已定案的規則：<b>標單有專屬對象（依直播主分別報價）、帶有效期限、到期即失效需重新開立</b>。<br>
+  三個方案的差別在「一張標單管多大範圍」。請看完後：①在每個方案下方填意見 ②勾選標單要有的欄位 ③選出傾向的方案 ④按底部彙整複製，貼回給 Miru。</p>
+
+  <!-- ============ 方案 A ============ -->
+  <h2>方案 A：單品標單<span class="tag t-a">一張單＝一個商品</span></h2>
+  <p class="desc">針對單一商品給單一直播主的專屬報價。最靈活，改價只動一張單；但商品多時單量大。</p>
+  <div class="paper" data-fb="方案A 單品標單">
+    <div class="doc-head">
+      <div><h3>直播專屬報價單</h3><span class="no">標單編號 BS-2607-0031 ｜ 開立 2026/07/05</span></div>
+      <div class="expiry">有效期限至 2026/07/12 23:59<small>到期自動失效，需重新開立</small></div>
+    </div>
+    <div class="meta">
+      <div>專屬對象：<b>小美直播</b>（不可轉讓）</div>
+      <div>品牌／廠商：<b>K-Beauty Lab</b></div>
+      <div>平台窗口：<b>Livia ｜ LINE @miru</b></div>
+    </div>
+    <table>
+      <tr><th>商品／規格</th><th>直播專屬批發價</th><th>建議售價</th><th>利潤空間</th><th>最低下單量</th></tr>
+      <tr><td>膠原蛋白精華 30ml</td><td class="pr">$285</td><td>$499</td><td class="pf">$214（43%）</td><td>100 件</td></tr>
+    </table>
+    <div class="meta">
+      <div>備貨期限：<b>海外備貨 14–21 天</b></div>
+      <div>出貨方式：<b>集運統一出貨</b></div>
+      <div>樣品：<b>可申請 1 件</b></div>
+    </div>
+    <ul class="terms">
+      <li>本報價僅限標單對象於直播通路使用，不得公開或轉讓。</li>
+      <li>依本單價格下單需於有效期限內完成；逾期請聯繫窗口重新開立。</li>
+      <li>付款條件：下單後 3 日內匯款，確認入帳後備貨。</li>
+    </ul>
+    <div class="confirm">直播主線上確認：<button type="button" class="btn">✓ 我接受此報價</button><span>確認後鎖定價格，逾期未確認自動失效</span></div>
+  </div>
+  <div class="diff"><b>適合：</b>商品少、價格常變動、想精準控每個直播主拿到的每個價。<b>單量：</b>多（每商品每人一張）。</div>
+  <div class="fb"><label>💬 對方案 A 的意見（選填）</label><textarea data-name="方案A意見" placeholder="想法、要改的地方…"></textarea></div>
+
+  <!-- ============ 方案 B ============ -->
+  <h2>方案 B：單場標單<span class="tag t-b">一張單＝一場直播</span></h2>
+  <p class="desc">以「一場直播檔期」為單位，一張單列出該場全部商品的專屬價，有效期限自動＝檔期結束。最貼合直播作業節奏。</p>
+  <div class="paper" data-fb="方案B 單場標單">
+    <div class="doc-head">
+      <div><h3>直播檔期報價單</h3><span class="no">標單編號 BS-2607-0032 ｜ 開立 2026/07/05</span></div>
+      <div class="expiry">檔期 2026/07/15（二）20:00–23:00<small>有效期限至檔期結束，逾期失效</small></div>
+    </div>
+    <div class="meta">
+      <div>專屬對象：<b>小美直播</b>（不可轉讓）</div>
+      <div>場次性質：<b>K-Beauty 品牌專場</b> <span class="stamp s-live">專場</span></div>
+      <div>平台窗口：<b>Livia ｜ LINE @miru</b></div>
+    </div>
+    <table>
+      <tr><th>商品／規格</th><th>直播價</th><th>建議售價</th><th>利潤</th><th>MOQ</th><th>備貨</th></tr>
+      <tr><td>膠原蛋白精華 30ml</td><td class="pr">$285</td><td>$499</td><td class="pf">43%</td><td>100</td><td>14–21天</td></tr>
+      <tr><td>洗顏慕斯 150ml</td><td class="pr">$180</td><td>$320</td><td class="pf">44%</td><td>150</td><td>現貨 5天</td></tr>
+      <tr><td>安瓶禮盒（限量）</td><td class="pr">$560</td><td>$980</td><td class="pf">43%</td><td>50</td><td>14天</td></tr>
+    </table>
+    <div class="meta">
+      <div>達量加碼：<b>單場合計滿 300 件，全單再降 3%</b></div>
+      <div>獨家條款：<b>本場商品 48 小時內不開放其他直播主</b></div>
+    </div>
+    <ul class="terms">
+      <li>本單價格僅限本檔期使用；檔期異動請於 48 小時前聯繫窗口改期換單。</li>
+      <li>下單以直播實際成交量彙total回報，3 日內匯款。</li>
+    </ul>
+    <div class="confirm">直播主線上確認：<button type="button" class="btn">✓ 接受本場報價</button><span>確認後本場價格鎖定</span></div>
+  </div>
+  <div class="diff"><b>適合：</b>以「場」為單位談合作（含專場／插標）、想綁檔期營造限時感。<b>單量：</b>中（每場一張）。<b>加分：</b>和「專場申請」流程天然銜接——專場核准後自動生成該場標單。</div>
+  <div class="fb"><label>💬 對方案 B 的意見（選填）</label><textarea data-name="方案B意見" placeholder="想法、要改的地方…"></textarea></div>
+
+  <!-- ============ 方案 C ============ -->
+  <h2>方案 C：期間價格表<span class="tag t-c">一張單＝一段期間全商品</span></h2>
+  <p class="desc">給單一直播主一份「本月專屬價格表」，期間內多場直播共用，到期整份重開。管理最省力，但個別改價要整份更新。</p>
+  <div class="paper" data-fb="方案C 期間價格表">
+    <div class="doc-head">
+      <div><h3>月度專屬價格表</h3><span class="no">標單編號 BS-2607-M08 ｜ 開立 2026/07/01</span></div>
+      <div class="expiry">有效期間 2026/07/01 – 07/31<small>每月 1 日更新重發</small></div>
+    </div>
+    <div class="meta">
+      <div>專屬對象：<b>小美直播</b>（不可轉讓）</div>
+      <div>涵蓋品牌：<b>K-Beauty Lab、日本雜貨屋</b></div>
+      <div>本月累購回饋：<b>累計滿 1,000 件月結回饋 2%</b></div>
+    </div>
+    <table>
+      <tr><th>商品／規格</th><th>本月直播價</th><th>建議售價</th><th>利潤</th><th>MOQ</th><th>狀態</th></tr>
+      <tr><td>膠原蛋白精華 30ml</td><td class="pr">$290</td><td>$499</td><td class="pf">42%</td><td>100</td><td><span class="stamp s-ok">有效</span></td></tr>
+      <tr><td>洗顏慕斯 150ml</td><td class="pr">$185</td><td>$320</td><td class="pf">42%</td><td>150</td><td><span class="stamp s-ok">有效</span></td></tr>
+      <tr><td>果乾禮盒</td><td class="pr">$210</td><td>$399</td><td class="pf">47%</td><td>200</td><td><span class="stamp s-exp">已下架</span></td></tr>
+    </table>
+    <ul class="terms">
+      <li>表內價格期間內多場直播通用；個別商品調價將重發整份並通知。</li>
+      <li>期間結束自動失效；續用請於月底前確認新表。</li>
+    </ul>
+    <div class="confirm">直播主線上確認：<button type="button" class="btn">✓ 接受本月價格表</button><span>每月確認一次</span></div>
+  </div>
+  <div class="diff"><b>適合：</b>合作穩定的直播主、商品價格不常動、想把行政量降到最低。<b>單量：</b>少（每人每月一張）。<b>風險：</b>期間內想對單一商品臨時調價比較麻煩。</div>
+  <div class="fb"><label>💬 對方案 C 的意見（選填）</label><textarea data-name="方案C意見" placeholder="想法、要改的地方…"></textarea></div>
+
+  <!-- ============ 欄位勾選 ============ -->
+  <h2>標單欄位勾選<span class="tag t-a">要哪些？</span></h2>
+  <p class="qhint">預設全勾＝上面樣張出現過的欄位；點一下取消不要的，也可在意見欄補充缺的。</p>
+  <div class="pills" id="fieldPills">
+    <button type="button" class="pill on">標單編號</button>
+    <button type="button" class="pill on">開立日期</button>
+    <button type="button" class="pill on">有效期限（醒目）</button>
+    <button type="button" class="pill on">專屬對象＋不可轉讓</button>
+    <button type="button" class="pill on">品牌／廠商名</button>
+    <button type="button" class="pill on">商品＋規格</button>
+    <button type="button" class="pill on">直播專屬批發價</button>
+    <button type="button" class="pill on">建議售價</button>
+    <button type="button" class="pill on">利潤空間</button>
+    <button type="button" class="pill on">最低下單量 MOQ</button>
+    <button type="button" class="pill on">備貨期限</button>
+    <button type="button" class="pill on">出貨方式</button>
+    <button type="button" class="pill on">付款條件</button>
+    <button type="button" class="pill on">平台窗口</button>
+    <button type="button" class="pill on">直播主線上確認鈕</button>
+    <button type="button" class="pill">達量加碼（階梯）</button>
+    <button type="button" class="pill">獨家／限場條款</button>
+    <button type="button" class="pill">樣品提供註記</button>
+    <button type="button" class="pill">累購回饋</button>
+    <button type="button" class="pill">變價紀錄</button>
+  </div>
+  <div class="fb"><label>💬 欄位補充（樣張沒列到但需要的）</label><textarea data-name="欄位補充" placeholder="例如：稅別、報關資訊、退換貨條款…"></textarea></div>
+
+  <!-- ============ 方案選擇 ============ -->
+  <div class="qlabel">你傾向哪一種？</div>
+  <p class="qhint">也可以混用（例：平時用 C 月表、專場另開 B 單場標單）。</p>
+  <div class="pills" id="choicePills" data-single="1">
+    <button type="button" class="pill">A 單品標單</button>
+    <button type="button" class="pill">B 單場標單</button>
+    <button type="button" class="pill">C 期間價格表</button>
+    <button type="button" class="pill">混用（C＋B）</button>
+    <button type="button" class="pill">再想想</button>
+  </div>
+  <div class="fb"><label>💬 整體意見</label><textarea data-name="整體意見" placeholder="其他想法…"></textarea></div>
+</div>
+
+<div class="fbbar">
+  <span class="fbcount" id="fbCount">尚未填寫</span>
+  <button class="fbbtn" id="fbCopy">彙整意見與選擇，複製給 Miru →</button>
+</div>
+
+<dialog id="dlg">
+  <div class="modal">
+    <h3>你的回覆</h3>
+    <p>已複製到剪貼簿，貼回聊天視窗即可。</p>
+    <textarea class="out" id="out" readonly></textarea>
+    <div class="mrow">
+      <span class="ok" id="okMsg">已複製 ✓</span>
+      <button class="fbbtn2" id="closeBtn">關閉</button>
+      <button class="fbbtn" id="copyAgain">再複製一次</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  var KEY='bidsheet_feedback_v1';
+  var saved={}; try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+
+  document.querySelectorAll('#fieldPills .pill').forEach(function(p){
+    var k='欄位:'+p.textContent;
+    if(saved[k]!==undefined) p.classList.toggle('on', saved[k]);
+    p.addEventListener('click',function(){p.classList.toggle('on');persist();count();});
+  });
+  var choice=document.getElementById('choicePills');
+  choice.querySelectorAll('.pill').forEach(function(p){
+    if(saved['方案選擇']===p.textContent) p.classList.add('on');
+    p.addEventListener('click',function(){
+      choice.querySelectorAll('.pill').forEach(function(x){x.classList.remove('on')});
+      p.classList.add('on');persist();count();
+    });
+  });
+  var tas=Array.prototype.slice.call(document.querySelectorAll('.fb textarea'));
+  tas.forEach(function(t){
+    var k=t.getAttribute('data-name');
+    if(saved[k]) t.value=saved[k];
+    t.addEventListener('input',function(){persist();count();});
+  });
+
+  function state(){
+    var d={};
+    document.querySelectorAll('#fieldPills .pill').forEach(function(p){d['欄位:'+p.textContent]=p.classList.contains('on')});
+    var c=choice.querySelector('.pill.on'); if(c) d['方案選擇']=c.textContent;
+    tas.forEach(function(t){var v=t.value.trim(); if(v) d[t.getAttribute('data-name')]=v;});
+    return d;
+  }
+  function persist(){localStorage.setItem(KEY,JSON.stringify(state()));}
+  function count(){
+    var d=state(); var n=0;
+    tas.forEach(function(t){if(t.value.trim())n++});
+    if(d['方案選擇'])n++;
+    document.getElementById('fbCount').textContent=n?('已填 '+n+' 項'):'尚未填寫';
+  }
+  count();
+
+  document.getElementById('fbCopy').addEventListener('click',function(){
+    var d=state();
+    var lines=['這是泡泡對標單設計的回覆，請據此定案：',''];
+    lines.push('【方案選擇】'+(d['方案選擇']||'（未選）'));
+    var keep=[],drop=[];
+    document.querySelectorAll('#fieldPills .pill').forEach(function(p){
+      (p.classList.contains('on')?keep:drop).push(p.textContent);
+    });
+    lines.push('【要的欄位】'+keep.join('、'));
+    if(drop.length)lines.push('【不要的欄位】'+drop.join('、'));
+    tas.forEach(function(t){
+      if(t.value.trim())lines.push('【'+t.getAttribute('data-name')+'】'+t.value.trim());
+    });
+    var txt=lines.join('\n');
+    document.getElementById('out').value=txt;
+    document.getElementById('okMsg').style.display='none';
+    document.getElementById('dlg').showModal();
+    (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt):Promise.reject())
+      .then(function(){document.getElementById('okMsg').style.display='inline'})
+      .catch(function(){var o=document.getElementById('out');o.focus();o.select();document.execCommand('copy');document.getElementById('okMsg').style.display='inline'});
+  });
+  document.getElementById('copyAgain').addEventListener('click',function(){
+    var o=document.getElementById('out');
+    (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(o.value):Promise.reject())
+      .then(function(){document.getElementById('okMsg').style.display='inline'})
+      .catch(function(){o.focus();o.select();document.execCommand('copy');document.getElementById('okMsg').style.display='inline'});
+  });
+  document.getElementById('closeBtn').addEventListener('click',function(){document.getElementById('dlg').close()});
+})();
+</script>
+</body>
+</html>
