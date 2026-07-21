@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>國際直播團購平台 — 開發進度</title>
+<style>
+  :root {
+    --ground:#fbf7f9; --surface:#ffffff; --surface-2:#f7eff3; --line:#e9dbe2;
+    --ink:#2c2028; --ink-2:#6b5a63; --ink-3:#9b8892;
+    --accent:#a32d6b; --accent-soft:#f8e7ef;
+    --ok:#2f7d5d;   --ok-soft:#e3f2ea;
+    --ready:#9a6410; --ready-soft:#fbeeda;
+    --ext:#6a52a3;  --ext-soft:#ece7f8;
+    --risk:#b03a3a; --risk-soft:#fae7e7;
+    --idle:#7d7078; --idle-soft:#efe9ec;
+    --sans:"PingFang TC","Noto Sans TC","Hiragino Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:#171115; --surface:#201820; --surface-2:#2a2029; --line:#3b2e37;
+      --ink:#f3e9ef; --ink-2:#c1afbc; --ink-3:#8d7a86;
+      --accent:#e483b3; --accent-soft:#3a2233;
+      --ok:#7dd3a8;   --ok-soft:#1d3a2d;
+      --ready:#e8b866; --ready-soft:#3c2e18;
+      --ext:#b6a3e8;  --ext-soft:#2b2440;
+      --risk:#e88f8f; --risk-soft:#3d2222;
+      --idle:#a2949c; --idle-soft:#2e262c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#171115; --surface:#201820; --surface-2:#2a2029; --line:#3b2e37;
+    --ink:#f3e9ef; --ink-2:#c1afbc; --ink-3:#8d7a86;
+    --accent:#e483b3; --accent-soft:#3a2233;
+    --ok:#7dd3a8; --ok-soft:#1d3a2d;
+    --ready:#e8b866; --ready-soft:#3c2e18;
+    --ext:#b6a3e8; --ext-soft:#2b2440;
+    --risk:#e88f8f; --risk-soft:#3d2222;
+    --idle:#a2949c; --idle-soft:#2e262c;
+  }
+  :root[data-theme="light"] {
+    --ground:#fbf7f9; --surface:#ffffff; --surface-2:#f7eff3; --line:#e9dbe2;
+    --ink:#2c2028; --ink-2:#6b5a63; --ink-3:#9b8892;
+    --accent:#a32d6b; --accent-soft:#f8e7ef;
+    --ok:#2f7d5d; --ok-soft:#e3f2ea;
+    --ready:#9a6410; --ready-soft:#fbeeda;
+    --ext:#6a52a3; --ext-soft:#ece7f8;
+    --risk:#b03a3a; --risk-soft:#fae7e7;
+    --idle:#7d7078; --idle-soft:#efe9ec;
+  }
+
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--sans);
+         line-height:1.65; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:900px; margin:0 auto; padding:40px 20px 72px; display:flex; flex-direction:column; gap:34px; }
+  a { color:var(--accent); }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:4px; }
+
+  /* ── 頁首 ── */
+  .head { display:flex; flex-direction:column; gap:10px; }
+  .eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+             color:var(--ink-3); }
+  h1 { margin:0; font-size:clamp(26px,4.4vw,36px); font-weight:800; letter-spacing:-.02em;
+       text-wrap:balance; }
+  .thesis { margin:0; max-width:60ch; color:var(--ink-2); font-size:15.5px; }
+  .thesis b { color:var(--ink); font-weight:700; }
+
+  /* ── 計數 ── */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .stat { background:var(--surface); border:1px solid var(--line); border-radius:14px;
+          padding:14px 16px; display:flex; flex-direction:column; gap:2px; }
+  .stat .n { font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:26px;
+             font-weight:700; line-height:1.15; }
+  .stat .k { font-size:12.5px; color:var(--ink-2); }
+  .stat.is-ok    .n { color:var(--ok); }
+  .stat.is-ready .n { color:var(--ready); }
+  .stat.is-ext   .n { color:var(--ext); }
+  .stat.is-risk  .n { color:var(--risk); }
+
+  /* ── 區塊 ── */
+  section { display:flex; flex-direction:column; gap:12px; }
+  .sec-head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+              border-bottom:1px solid var(--line); padding-bottom:8px; }
+  h2 { margin:0; font-size:17px; font-weight:750; letter-spacing:-.01em; }
+  .sec-note { font-size:12.5px; color:var(--ink-3); }
+
+  .rows { display:flex; flex-direction:column; gap:8px; }
+  .row { background:var(--surface); border:1px solid var(--line); border-radius:12px;
+         border-left:4px solid var(--stripe,var(--idle));
+         padding:12px 15px; display:grid; grid-template-columns:1fr auto; gap:6px 14px; align-items:start; }
+  .row .t { font-weight:650; font-size:15px; }
+  .row .d { grid-column:1/-1; font-size:13.5px; color:var(--ink-2); }
+  .row.ok    { --stripe:var(--ok); }
+  .row.ready { --stripe:var(--ready); }
+  .row.doing { --stripe:var(--accent); }
+  .row.ext   { --stripe:var(--ext); }
+  .row.risk  { --stripe:var(--risk); }
+  .row.idle  { --stripe:var(--idle); }
+
+  .pill { font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+  .p-ok    { background:var(--ok-soft);    color:var(--ok); }
+  .p-ready { background:var(--ready-soft); color:var(--ready); }
+  .p-doing { background:var(--accent-soft);color:var(--accent); }
+  .p-ext   { background:var(--ext-soft);   color:var(--ext); }
+  .p-risk  { background:var(--risk-soft);  color:var(--risk); }
+  .p-idle  { background:var(--idle-soft);  color:var(--idle); }
+
+  /* 核心流程鏈 */
+  .flow { background:var(--surface); border:1px solid var(--line); border-radius:12px;
+          border-left:4px solid var(--ok); padding:14px 16px; display:flex; flex-direction:column; gap:8px; }
+  .flow .t { font-weight:650; font-size:15px; }
+  .chain { display:flex; flex-wrap:wrap; gap:6px; }
+  .chain span { font-size:12.5px; background:var(--surface-2); color:var(--ink-2);
+                border-radius:7px; padding:3px 9px; }
+
+  .order { font-family:var(--mono); font-size:12px; color:var(--ink-3); margin-right:6px;
+           font-variant-numeric:tabular-nums; }
+
+  /* 回覆進度計量 */
+  .meter { background:var(--surface); border:1px solid var(--line); border-radius:12px;
+           padding:13px 15px; display:flex; flex-direction:column; gap:8px; }
+  .meter .lg { display:flex; justify-content:space-between; gap:12px; font-size:12.5px; color:var(--ink-2); }
+  .meter .lg b { font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink); font-weight:700; }
+  .bar { height:9px; border-radius:999px; background:var(--surface-2); overflow:hidden; display:flex; }
+  .bar i { display:block; height:100%; background:var(--ok); }
+  .bar u { display:block; height:100%; background:var(--ext); }
+  .grp { font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase;
+         color:var(--ink-3); margin:6px 0 -2px; }
+
+  footer { color:var(--ink-3); font-size:12.5px; border-top:1px solid var(--line); padding-top:14px; }
+
+  @media (max-width:640px) {
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .row { grid-template-columns:1fr; }
+    .row .pill { justify-self:start; }
+  }
+  @media (prefers-reduced-motion:reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow">開發進度 · 更新於 2026-07-17</div>
+    <h1>國際直播團購平台</h1>
+    <p class="thesis"><b>核心生意流程已全部做完、正式站可用。</b>目前卡在三件事：帳號讓人自己申請登入（做一半）、標單制等泡泡選方案（未開工）、招商前的清理（等你說日子）。</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat is-ok">   <div class="n">7</div><div class="k">大功能已上線</div></div>
+    <div class="stat is-ready"><div class="n">0</div><div class="k">等你點頭的事</div></div>
+    <div class="stat is-ext">  <div class="n">3</div><div class="k">等泡泡回覆</div></div>
+    <div class="stat is-risk"> <div class="n">3</div><div class="k">招商前必做</div></div>
+  </div>
+
+  <section>
+    <div class="sec-head"><h2>已完成上線</h2><span class="sec-note">正式站現在就能用</span></div>
+    <div class="flow">
+      <div class="t">核心生意閉環 — 整條走得通</div>
+      <div class="chain">
+        <span>廠商提品</span><span>平台審核</span><span>平台定價</span><span>上架</span>
+        <span>通路主選品</span><span>合作邀約</span><span>簽約解鎖</span><span>下單</span>
+        <span>回報匯款</span><span>確認收款</span><span>出貨</span><span>客服工單</span>
+      </div>
+    </div>
+    <div class="rows">
+      <div class="row ok"><div class="t">報價單</div><span class="pill p-ok">已上線</span>
+        <div class="d">直播主自己組單 → 送出 → 平台確認並鎖價 14 天 → 平台代轉成正式訂單，有防重複開單保護。</div></div>
+      <div class="row ok"><div class="t">退貨換貨</div><span class="pill p-ok">已上線</span>
+        <div class="d">可只退部分品項、庫存自動補回、退款登記；通路主在自己訂單頁看得到進度。</div></div>
+      <div class="row ok"><div class="t">帳號審核（管理端）</div><span class="pill p-ok">已上線</span>
+        <div class="d">審核申請、通過或退件；團購主通過後自動給 30 天試用。</div></div>
+      <div class="row ok"><div class="t">選品大廳</div><span class="pill p-ok">已上線</span>
+        <div class="d">分類篩選、關鍵字搜尋、熱門精選、活動 Banner、含運費／運費另計標示。</div></div>
+      <div class="row ok"><div class="t">客服工單</div><span class="pill p-ok">已上線</span>
+        <div class="d">泡泡可直接開單回饋、附截圖，管理端回覆與結案。</div></div>
+      <div class="row ok"><div class="t">資安防護</div><span class="pill p-ok">已上線</span>
+        <div class="d">堵掉付費牆與價格外洩破口、登入防盜刷、成本價零外洩、瀏覽器安全標頭。</div></div>
+      <div class="row ok"><div class="t">轉單略過提示</div><span class="pill p-ok">本次新增</span>
+        <div class="d">轉單時若有品項因「已下架／未定價」不會成單，管理端與通路主都會被明確告知，不再默默消失。<b>「已送出待確認」階段就會提醒</b>，平台按確認前還來得及退回請對方修正。</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>接下來要做</h2><span class="sec-note">依優先序</span></div>
+    <div class="rows">
+      <div class="row doing"><div class="t"><span class="order">1</span>帳號上線流程（做一半，招商必需）</div><span class="pill p-doing">進行中</span>
+        <div class="d">管理端審核已完成。還缺「用 Google 登入」與「首次登入的申請表單」。前置要一起去 Google 與資料庫後台設定，<b>需要你參與</b>（我可代操作）。</div></div>
+      <div class="row idle"><div class="t"><span class="order">2</span>標單制（直播不公開喊價）</div><span class="pill p-idle">設計已定案・未開工</span>
+        <div class="d">泡泡已定案：做兩種標單型別、欄位也定了，可排入開發。剩幾個運作細節開發前再跟他確認即可。</div></div>
+      <div class="row idle"><div class="t"><span class="order">3</span>選配功能</div><span class="pill p-idle">可做可不做</span>
+        <div class="d">團購主批次報價（會牴觸你定的「團購主直接下單」鐵律，要做得先鬆綁）、管理端成本檢視。</div></div>
+      <div class="row idle"><div class="t"><span class="order">4</span>消費者端與品牌館</div><span class="pill p-idle">最後階段</span>
+        <div class="d">消費者端（C 端）、品牌館、上新專區，依原計畫排在最後。</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>泡泡的回覆進度</h2><span class="sec-note">已定案 4 類 · 待回覆 3 件</span></div>
+
+    <div class="meter">
+      <div class="lg"><span>已定案 <b>4</b> 類議題</span><span>待他回覆 <b>3</b> 件</span></div>
+      <div class="bar"><i style="width:57%"></i><u style="width:43%"></u></div>
+    </div>
+
+    <div class="grp">已回覆・已定案</div>
+    <div class="rows">
+      <div class="row ok"><div class="t">標單設計怎麼做</div><span class="pill p-ok">2026-07-17 定案</span>
+        <div class="d">定案：做<b>兩種標單</b>（一份專屬完整清單＋期限、以及一整段期間的整批價格表）；欄位照他列的、樣品多加「現場提供」、不做階梯加碼與累購回饋。設計已定、尚未開工。</div></div>
+      <div class="row ok"><div class="t">報價單怎麼運作（5 個問題）</div><span class="pill p-ok">2026-07-14 定案</span>
+        <div class="d">定案：只有直播主用報價單、平台代為轉成訂單、確認後鎖價兩週、可只成立一部分、對外統一叫「報價單」。<b>已全部照做並上線。</b></div></div>
+      <div class="row ok"><div class="t">運費怎麼處理</div><span class="pill p-ok">2026-07-08 定案</span>
+        <div class="d">定案：只在商品上標「含運費／運費另計」，不做運費計價、不動批發價。<b>已上線。</b></div></div>
+      <div class="row ok"><div class="t">他開的 9 張回饋工單</div><span class="pill p-ok">7 張已結案</span>
+        <div class="d">泡泡回饋批次一～五的內容已陸續實作上線；9 張中 7 張結案。</div></div>
+    </div>
+
+    <div class="grp">待回覆</div>
+    <div class="rows">
+      <div class="row ext"><div class="t">標單運作三點確認</div><span class="pill p-ext">等回覆</span>
+        <div class="d">賣價下限、需求數量算不算訂購、一個貨源一張單——開發標單前一併跟他確認即可。</div></div>
+      <div class="row ext"><div class="t">專場申請表要放哪些欄位</div><span class="pill p-ext">等回覆</span></div>
+      <div class="row ext"><div class="t">剩下 2 張工單沒結案</div><span class="pill p-ext">等回覆</span>
+        <div class="d">需要他去點「確認結案」或「退回處理」。</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>招商前必做</h2><span class="sec-note">等你說日子</span></div>
+    <div class="rows">
+      <div class="row risk"><div class="t">關掉預覽模式</div><span class="pill p-risk">必做</span>
+        <div class="d">現在任何知道網址的人都能免登入瀏覽。關掉後會同時關掉泡泡的展示入口，所以等你確認招商日再做。</div></div>
+      <div class="row risk"><div class="t">清除測試帳號與示範假資料</div><span class="pill p-risk">必做</span>
+        <div class="d">包含示範商品目錄、測試帳號，以及為了讓泡泡預覽而擺的示範報價單、退貨單、待審帳號（清除腳本已備好）。</div></div>
+      <div class="row ready"><div class="t">資料庫升級付費方案</div><span class="pill p-ready">上線前升級</span>
+        <div class="d">升級後可開啟自動備份還原（誤刪或出事能倒回某個時間點）與外洩密碼偵測。<b>已規劃在正式上線前升級</b>，現階段維持免費方案。</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>目前風險</h2></div>
+    <div class="rows">
+      <div class="row risk"><div class="t">預覽模式開著</div><span class="pill p-risk">刻意</span>
+        <div class="d">為了讓泡泡看，目前刻意開啟。裡面全是假資料，但等於網址外流就能瀏覽。招商前務必關閉。</div></div>
+      <div class="row ready"><div class="t">進階防護尚未開啟</div><span class="pill p-ready">上線前處理</span>
+        <div class="d">自動備份還原、外洩密碼偵測需付費方案才有。目前沒有自助註冊流程，風險不高；<b>計畫在正式上線前升級一併開啟。</b></div></div>
+    </div>
+  </section>
+
+  <footer>此表由 Claude 依專案交接紀錄與實際系統狀態整理。功能狀態以正式站實測為準。</footer>
+</div>
+
+</html>
