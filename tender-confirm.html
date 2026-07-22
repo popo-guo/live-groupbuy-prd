@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>標單怎麼運作・請確認 4 件事</title>
+<style>
+  :root{
+    --rose:#e5779a; --rose-deep:#c85a7e; --rose-soft:#fdeef3;
+    --ink:#3a2d33; --muted:#8a7a80; --line:#f0d9e2;
+    --bg:#fff8fb; --card:#ffffff; --ok:#3f9d7a; --warn:#d98324; --warn-soft:#fdf1e3;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px}
+  .wrap{max-width:680px;margin:0 auto;padding:20px 16px 120px}
+  header{text-align:center;padding:14px 0 6px}
+  header h1{font-size:22px;margin:0 0 6px;color:var(--rose-deep)}
+  header p{margin:4px 0;color:var(--muted);font-size:14px}
+  .intro{background:var(--rose-soft);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;margin:14px 0 8px;font-size:14px;color:var(--ink)}
+  .intro b{color:var(--rose-deep)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:18px 16px;margin:16px 0;box-shadow:0 2px 10px rgba(200,90,126,.05)}
+  .qtag{display:inline-block;background:var(--rose);color:#fff;border-radius:999px;
+    font-size:13px;font-weight:700;padding:2px 12px;margin-bottom:8px}
+  .qtag.key{background:var(--warn)}
+  .qtag.later{background:#a99;}
+  .qtitle{font-size:17px;font-weight:700;margin:2px 0 6px}
+  .qdesc{font-size:14px;color:var(--muted);margin:0 0 12px}
+  .qdesc .hl{color:var(--rose-deep);font-weight:600}
+  label.opt{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;margin:8px 0;
+    border:1.5px solid var(--line);border-radius:12px;cursor:pointer;transition:.15s;background:#fff}
+  label.opt:hover{border-color:var(--rose)}
+  label.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--rose);flex:none}
+  label.opt.sel{border-color:var(--rose);background:var(--rose-soft)}
+  .opt .ot{font-weight:600}
+  .rec{display:inline-block;background:#eaf6f0;color:var(--ok);border-radius:999px;
+    font-size:12px;font-weight:700;padding:1px 8px;margin-left:6px}
+  .note{width:100%;margin-top:6px;border:1.5px solid var(--line);border-radius:10px;
+    padding:8px 10px;font-size:14px;font-family:inherit;resize:vertical;min-height:44px}
+  .note::placeholder{color:#c3b0b7}
+  .warnbox{background:var(--warn-soft);border:1px solid #f0d4ad;border-radius:12px;
+    padding:10px 14px;margin:10px 0 2px;font-size:13.5px;color:#8a5a1e}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);
+    padding:12px 16px;display:flex;gap:10px;justify-content:center;box-shadow:0 -2px 12px rgba(0,0,0,.04)}
+  .bar .inner{max-width:680px;width:100%;display:flex;gap:10px}
+  button{font-family:inherit;font-size:16px;font-weight:700;border:none;border-radius:12px;
+    padding:13px 18px;cursor:pointer;flex:1}
+  .btn-primary{background:var(--rose);color:#fff}
+  .btn-primary:active{background:var(--rose-deep)}
+  .btn-ghost{background:#fff;color:var(--rose-deep);border:1.5px solid var(--rose);flex:none;padding:13px 16px}
+  .result{background:#fff;border:2px solid var(--rose);border-radius:16px;padding:16px;margin:16px 0}
+  .result h3{margin:0 0 10px;color:var(--rose-deep);font-size:16px}
+  .result textarea{width:100%;min-height:170px;border:1px solid var(--line);border-radius:10px;
+    padding:10px;font-size:14px;font-family:inherit;line-height:1.6}
+  .copybtn{margin-top:10px;background:var(--rose);color:#fff;width:100%}
+  .hint{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+  .done{display:none;color:var(--ok);font-weight:700;text-align:center;margin-top:8px}
+  footer{text-align:center;color:#c3b0b7;font-size:12px;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>標單怎麼運作・請確認</h1>
+    <p>國際直播團購平台　給泡泡的 4 個問題</p>
+  </header>
+
+  <div class="intro">
+    這裡講的「<b>標單</b>」＝你之前確認「兩種都做」的那個：<b>專屬報價清單</b>（一張給一位直播主的專屬報價）＋<b>期間價格表</b>（一位直播主、一整段期間的整批專屬價）。跟團購主看的「公開報價單」是兩回事。<br>
+    標單的平台開單端、直播主線上確認端都做好上線了。下一步是「<b>直播主確認標單後怎麼接成正式訂單</b>」，動這步前有 4 件事要你拍板。<b>前 3 題</b>做轉訂單前一定要有答案；<b>Q2 最重要</b>；<b>Q4 可以晚點回</b>。填完按最下面「產生我的回覆」複製傳回即可。
+  </div>
+
+  <!-- Q1 -->
+  <div class="card" data-q="Q1">
+    <span class="qtag">Q1</span>
+    <div class="qtitle">標單上的「賣價下限」，是硬規定還是提醒？</div>
+    <p class="qdesc">「賣價下限」＝<span class="hl">直播主賣給觀眾時，最低不能低於多少錢</span>（保護品牌價格）。想確認它要怎麼運作。</p>
+    <label class="opt"><input type="radio" name="Q1" value="A. 只是提醒文字，系統不強制">
+      <span><span class="ot">A.</span> 只是<b>提醒文字</b>：標單上寫一句「建議開賣不低於 NT$◯◯◯」，系統不強制、直播主自己拿捏<span class="rec">多數情況這樣就夠</span></span></label>
+    <label class="opt"><input type="radio" name="Q1" value="B. 系統要真的管，低於下限就擋">
+      <span><span class="ot">B.</span> <b>系統要真的管</b>：以後有地方讓直播主設對觀眾的售價時，低於這個下限就擋下來</span></label>
+    <textarea class="note" data-note="Q1" placeholder="有想法可補充（可留空）…"></textarea>
+    <div class="warnbox">補充：消費者購買端（C 端）目前還沒做，就算選 B，實際「擋人」也要等以後 C 端上線才有作用；現在只是先把規則講清楚。</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="card" data-q="Q2">
+    <span class="qtag key">Q2・最重要</span>
+    <div class="qtitle">直播主填的「需求數量」，確認標單後就等於下單嗎？</div>
+    <p class="qdesc">標單每項商品可以填「需求數量」。直播主把整張標單<span class="hl">線上確認</span>之後，這個數量代表什麼？</p>
+    <label class="opt"><input type="radio" name="Q2" value="A. 只是意向數量，確認標單不等於下單">
+      <span><span class="ot">A.</span> <b>只是意向</b>：代表「我大概想要這麼多」，確認標單 ≠ 正式下單；實際叫多少貨、什麼時候叫，之後再跟平台敲定</span></label>
+    <label class="opt"><input type="radio" name="Q2" value="B. 就是正式訂購量，一確認就開訂單扣庫存">
+      <span><span class="ot">B.</span> <b>就是正式訂購</b>：直播主一確認標單，平台就照這些數量幫他開正式訂單、扣庫存、進請款流程</span></label>
+    <textarea class="note" data-note="Q2" placeholder="有想法可補充（可留空）…"></textarea>
+    <div class="warnbox">這題決定「確認標單」後面接什麼：選 B → 確認標單直接接開訂單流程（跟現在報價單一樣）；選 A → 確認標單先停在「已確認」，下單另外走一步。</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="card" data-q="Q3">
+    <span class="qtag">Q3</span>
+    <div class="qtitle">一張標單可以放多家廠商的商品嗎？</div>
+    <p class="qdesc">（這題跟之前報價單問過的一樣，這次是問<span class="hl">標單</span>。）</p>
+    <label class="opt"><input type="radio" name="Q3" value="A. 一張標單只放同一家廠商的貨">
+      <span><span class="ot">A.</span> 一張標單<b>只放同一家廠商</b>的貨（之後轉正式訂單比較單純）</span></label>
+    <label class="opt"><input type="radio" name="Q3" value="B. 可以混多家廠商，轉單時自動按廠商拆單">
+      <span><span class="ot">B.</span> 可以<b>混多家廠商</b>（要轉成正式訂單時，自動按廠商拆成多張訂單）<span class="rec">跟你報價單選的一樣</span></span></label>
+    <textarea class="note" data-note="Q3" placeholder="一句「跟報價單一樣」也可以（可留空）…"></textarea>
+  </div>
+
+  <!-- Q4 -->
+  <div class="card" data-q="Q4">
+    <span class="qtag later">Q4・可晚點回</span>
+    <div class="qtitle">「專場」申請要填哪些欄位？</div>
+    <p class="qdesc">「專場」＝直播主跟平台申請「我要辦一場直播帶貨」。這個申請一核准，系統可以<span class="hl">自動幫他生一張對準那場的標單</span>。所以想問：直播主申請專場時，你希望他填哪些？<b>勾要的、補想加的。</b></p>
+    <label class="opt"><input type="checkbox" name="Q4" value="直播日期／時段"><span>直播日期／時段</span></label>
+    <label class="opt"><input type="checkbox" name="Q4" value="直播平台（在哪個平台開播）"><span>直播平台（在哪個平台開播）</span></label>
+    <label class="opt"><input type="checkbox" name="Q4" value="這場想帶哪些商品"><span>這場想帶哪些商品</span></label>
+    <label class="opt"><input type="checkbox" name="Q4" value="預計規模（觀看人數／直播長度）"><span>預計規模（觀看人數／直播長度之類）</span></label>
+    <label class="opt"><input type="checkbox" name="Q4" value="想要的檔期／標單有效期"><span>想要的檔期／標單有效期</span></label>
+    <textarea class="note" data-note="Q4" placeholder="其他想加的欄位（可留空）…"></textarea>
+  </div>
+
+  <div class="result" id="result" style="display:none">
+    <h3>✅ 你的回覆（複製傳回給團隊）</h3>
+    <textarea id="resultText" readonly></textarea>
+    <button class="copybtn" id="copyBtn">📋 一鍵複製</button>
+    <div class="done" id="doneMsg">已複製！貼到 LINE／訊息傳回給團隊即可 🎉</div>
+  </div>
+
+  <footer>國際直播團購平台・標單確認表　—　填答會暫存在本機瀏覽器，重整不會不見</footer>
+</div>
+
+<div class="bar"><div class="inner">
+  <button class="btn-ghost" id="resetBtn" type="button">清除</button>
+  <button class="btn-primary" id="genBtn" type="button">產生我的回覆 →</button>
+</div></div>
+
+<script>
+  const KEY='tender-confirm-v1';
+  const radioQs=['Q1','Q2','Q3'];   // 單選題
+  const checkQs=['Q4'];             // 複選題
+
+  function markSelRadio(input){
+    document.querySelectorAll(`input[name="${input.name}"]`).forEach(i=>i.closest('.opt').classList.remove('sel'));
+    input.closest('.opt').classList.add('sel');
+  }
+  function markSelCheck(input){
+    input.closest('.opt').classList.toggle('sel',input.checked);
+  }
+
+  function save(){
+    const s={};
+    radioQs.forEach(q=>{const r=document.querySelector(`input[name="${q}"]:checked`);if(r)s[q]=r.value;});
+    checkQs.forEach(q=>{
+      const vals=[...document.querySelectorAll(`input[name="${q}"]:checked`)].map(i=>i.value);
+      if(vals.length)s[q]=vals;
+    });
+    [...radioQs,...checkQs].forEach(q=>{
+      const n=document.querySelector(`textarea[data-note="${q}"]`);
+      if(n&&n.value.trim())s[q+'_note']=n.value.trim();
+    });
+    localStorage.setItem(KEY,JSON.stringify(s));
+  }
+  function restore(){
+    let s={};try{s=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+    radioQs.forEach(q=>{
+      if(s[q]){const r=document.querySelector(`input[name="${q}"][value="${CSS.escape(s[q])}"]`);if(r){r.checked=true;markSelRadio(r)}}
+    });
+    checkQs.forEach(q=>{
+      if(Array.isArray(s[q]))s[q].forEach(v=>{
+        const c=document.querySelector(`input[name="${q}"][value="${CSS.escape(v)}"]`);if(c){c.checked=true;markSelCheck(c)}
+      });
+    });
+    [...radioQs,...checkQs].forEach(q=>{
+      const n=document.querySelector(`textarea[data-note="${q}"]`);if(n&&s[q+'_note'])n.value=s[q+'_note'];
+    });
+  }
+
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.addEventListener('change',()=>{markSelRadio(r);save()}));
+  document.querySelectorAll('input[type=checkbox]').forEach(c=>c.addEventListener('change',()=>{markSelCheck(c);save()}));
+  document.querySelectorAll('textarea.note').forEach(t=>t.addEventListener('input',save));
+
+  document.getElementById('genBtn').addEventListener('click',()=>{
+    const lines=['【標單運作・泡泡確認】'];
+    const missing=[];
+    radioQs.forEach(q=>{
+      const r=document.querySelector(`input[name="${q}"]:checked`);
+      const n=document.querySelector(`textarea[data-note="${q}"]`);
+      const note=n&&n.value.trim()?`　補充：${n.value.trim()}`:'';
+      if(r){lines.push(`${q}：${r.value}${note}`)}
+      else{lines.push(`${q}：（未選）`);missing.push(q)}
+    });
+    checkQs.forEach(q=>{
+      const vals=[...document.querySelectorAll(`input[name="${q}"]:checked`)].map(i=>i.value);
+      const n=document.querySelector(`textarea[data-note="${q}"]`);
+      const extra=n&&n.value.trim()?`；其他：${n.value.trim()}`:'';
+      if(vals.length||extra){lines.push(`${q}（專場欄位）：${vals.join('、')}${extra}`)}
+      else{lines.push(`${q}（專場欄位）：（未填，可晚點回）`)}
+    });
+    if(missing.length){lines.push('');lines.push(`※ 前 3 題尚未選：${missing.join('、')}`);}
+    const txt=lines.join('\n');
+    document.getElementById('resultText').value=txt;
+    document.getElementById('result').style.display='block';
+    document.getElementById('doneMsg').style.display='none';
+    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'center'});
+  });
+
+  document.getElementById('copyBtn').addEventListener('click',async()=>{
+    const t=document.getElementById('resultText');
+    try{await navigator.clipboard.writeText(t.value)}catch(e){t.select();document.execCommand('copy')}
+    document.getElementById('doneMsg').style.display='block';
+  });
+
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    if(!confirm('確定清除所有已填的答案？'))return;
+    localStorage.removeItem(KEY);
+    document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(r=>{r.checked=false;r.closest('.opt').classList.remove('sel')});
+    document.querySelectorAll('textarea.note').forEach(t=>t.value='');
+    document.getElementById('result').style.display='none';
+  });
+
+  restore();
+</script>
+</body>
+</html>
