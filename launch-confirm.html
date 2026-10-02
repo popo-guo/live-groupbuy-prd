@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+<title>正式上線・請確認</title>
+<style>
+  :root{
+    --rose:#e5779a; --rose-btn:#b8486d; --rose-deep:#a8456a; --rose-soft:#fdeef3;
+    --ink:#3a2d33; --muted:#6f6066; --line:#f0d9e2;
+    --bg:#fff8fb; --card:#ffffff; --ok:#2e7d5f; --warn:#d98324; --warn-btn:#a8590f; --warn-soft:#fdf1e3;
+    --alert:#b4373f; --alert-soft:#fdebec; --alert-line:#f2bcc0;
+    --rec-ink:#2e6b52; --rec-bg:#e6f4ee;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px;overflow-wrap:break-word}
+  .wrap{max-width:680px;margin:0 auto;padding:20px 16px 130px}
+  header{text-align:center;padding:14px 0 6px}
+  header h1{font-size:22px;margin:0 0 6px;color:var(--rose-deep)}
+  header p{margin:4px 0;color:var(--muted);font-size:14px}
+  .nw{white-space:nowrap}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .intro{background:var(--rose-soft);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;margin:14px 0 8px;font-size:15px;color:var(--ink)}
+  .intro b{color:var(--rose-deep)}
+  .intro p{margin:0 0 6px}.intro p:last-child{margin:0}
+  .intro .secret{color:var(--alert);font-weight:700}
+
+  /* 頂端進度 */
+  .progress{position:sticky;top:0;z-index:5;background:rgba(255,248,251,.97);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    margin:8px -16px 0;padding:8px 16px;border-bottom:1px solid var(--line);font-size:14px}
+  .progress .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .progress b{color:var(--rose-deep);font-size:16px}
+  .progress .side{color:var(--muted);font-size:14px}
+  .progress .pwarn{display:block;color:var(--alert);font-weight:700;font-size:14px;margin-top:2px}
+  .pbar{display:block;height:6px;background:var(--line);border-radius:999px;margin-top:5px;overflow:hidden}
+  .pbar i{display:block;height:100%;width:0;background:var(--rose);border-radius:999px;transition:width .2s}
+  [id]{scroll-margin-top:84px}
+
+  /* 區塊標題 */
+  .part-h{font-size:19px;color:var(--rose-deep);margin:34px 0 2px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+  .part-sub{font-size:14px;color:var(--muted);margin:6px 0 0}
+  .sub-h{font-size:16px;margin:26px 0 -4px;color:var(--ink)}
+  .sub-h::before{content:"";display:inline-block;width:4px;height:15px;background:var(--rose);border-radius:2px;margin-right:8px;vertical-align:-2px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:18px 16px;margin:16px 0;box-shadow:0 2px 10px rgba(200,90,126,.05)}
+  .card.star{border:2px solid var(--warn);background:#fffdf9;box-shadow:0 3px 14px rgba(217,131,36,.12)}
+  .card.plain{box-shadow:none}
+  .qtag{display:inline-block;background:var(--rose-btn);color:#fff;border-radius:999px;
+    font-size:14px;font-weight:700;padding:2px 12px;margin-bottom:8px}
+  .qtag.key{background:var(--warn-btn)}
+  .qtag.soft{background:var(--rose-soft);color:var(--rose-deep)}
+  .qtitle{font-size:17px;font-weight:700;margin:2px 0 6px}
+  .qtitle.block{display:block}
+  .tnote{font-weight:400;font-size:14px;color:var(--muted);margin-left:4px}
+  .qdesc{font-size:14px;color:var(--muted);margin:0 0 12px}
+  .qdesc b{color:var(--rose-deep)}
+  .qdesc.tight{margin:2px 0 0;color:var(--ink)}
+  .rec{display:inline-block;background:var(--rec-bg);color:var(--rec-ink);border-radius:999px;
+    font-size:14px;font-weight:700;padding:0 8px;margin-left:4px;white-space:nowrap}
+
+  /* 第一部分：精簡卡片 */
+  .card.p1{padding:14px 14px 12px}
+  .p1head{display:flex;gap:10px;align-items:flex-start}
+  .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--rose-soft);color:var(--rose-deep);
+    font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .p1text{font-size:15px;min-width:0}
+  .p1text b{color:var(--rose-deep)}
+  .subpts,.later{margin:6px 0 0;padding:0;list-style:none}
+  .subpts li{margin:4px 0}
+  .later{padding-left:1.2em;list-style:disc;font-size:15px}
+  .later li{margin:6px 0}
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .seg label.opt{margin:0;justify-content:center;align-items:center;min-height:48px}
+  .seg label.opt input{margin-top:0}
+
+  label.opt{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;margin:8px 0;min-height:48px;
+    border:1.5px solid var(--line);border-radius:12px;cursor:pointer;transition:.15s;background:#fff}
+  label.opt:hover{border-color:var(--rose)}
+  label.opt:focus-within{outline:2px solid var(--rose-deep);outline-offset:2px}
+  label.opt input{margin-top:4px;width:20px;height:20px;accent-color:var(--rose-btn);flex:none}
+  label.opt.sel{border-color:var(--rose);background:var(--rose-soft)}
+  label.opt[data-tone=warn] input{accent-color:var(--warn-btn)}
+  label.opt[data-tone=warn].sel{border-color:var(--warn);background:var(--warn-soft)}
+  .opt .ot{font-weight:600}
+  .opt > span{min-width:0}
+
+  .flabel{display:block;font-size:14px;font-weight:600;color:var(--ink);margin:12px 0 4px}
+  .extra .flabel{color:var(--rose-deep)}
+  .note{display:block;width:100%;max-width:100%;border:1.5px solid var(--line);border-radius:10px;
+    padding:10px 12px;font-size:16px;font-family:inherit;color:var(--ink);background:#fff;min-height:46px}
+  textarea.note{resize:vertical;line-height:1.6}
+  .note:focus{outline:none;border-color:var(--rose-deep);box-shadow:0 0 0 3px rgba(168,69,106,.2)}
+  .note::placeholder{color:#857078}
+  .cond{animation:fade .15s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  details.more{margin-top:8px}
+  details.more summary{display:flex;align-items:center;min-height:44px;cursor:pointer;color:var(--rose-deep);
+    font-size:14px;font-weight:600;list-style:none;border-radius:8px}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary:focus-visible{outline:2px solid var(--rose-deep);outline-offset:2px}
+  details.more[open] summary{margin-bottom:4px}
+
+  .infobox{background:var(--rose-soft);border:1px solid var(--line);border-radius:12px;
+    padding:10px 14px;margin:10px 0 2px;font-size:14px;color:var(--ink)}
+  .infobox b{color:var(--rose-deep)}
+  .infobox.subnote{margin:14px 0 0}
+  .warnbox{background:var(--warn-soft);border:1px solid #f0d4ad;border-radius:12px;
+    padding:12px 14px;margin:14px 0 2px;font-size:14px;color:#8a5a1e}
+  .warnbox b{color:#7a4a10}
+  .starlinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .starlinks a{display:inline-flex;align-items:center;min-height:44px;padding:6px 14px;border-radius:999px;
+    background:var(--warn-btn);color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+  .alertbox{background:var(--alert-soft);border:1.5px solid var(--alert-line);border-left:5px solid var(--alert);
+    border-radius:10px;padding:10px 12px;margin:8px 0 10px;font-size:15px;color:var(--alert);font-weight:600}
+  .alertbox b{font-weight:800;text-decoration:underline;text-underline-offset:3px}
+  .storewarn{margin:10px 0 0}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom, 0px));display:flex;justify-content:center;
+    box-shadow:0 -2px 12px rgba(0,0,0,.04);z-index:10}
+  .bar .inner{max-width:680px;width:100%;display:flex;gap:10px}
+  button{font-family:inherit;font-size:16px;font-weight:700;border:none;border-radius:12px;
+    padding:13px 18px;cursor:pointer;flex:1;min-height:48px}
+  button:focus-visible{outline:2px solid var(--rose-deep);outline-offset:2px}
+  .btn-primary{background:var(--rose-btn);color:#fff}
+  .btn-primary:active{background:var(--rose-deep)}
+  .btn-ghost{background:#fff;color:var(--rose-deep);border:1.5px solid var(--rose-btn);flex:none;padding:13px 16px}
+  .btn-ghost.armed{background:var(--alert);border-color:var(--alert);color:#fff}
+  .result{background:#fff;border:2px solid var(--rose);border-radius:16px;padding:16px;margin:24px 0 16px}
+  .result h3{margin:0 0 10px;color:var(--rose-deep);font-size:16px}
+  .result textarea{display:block;width:100%;min-height:320px;border:1px solid var(--line);border-radius:10px;
+    padding:10px;font-size:16px;font-family:inherit;line-height:1.6;color:var(--ink);background:#fffcfd;resize:vertical}
+  .missing{background:var(--warn-soft);border:1px solid #f0d4ad;border-radius:10px;padding:10px 12px;
+    margin:0 0 10px;font-size:14px;color:#8a5a1e}
+  .missing .grp + .grp{margin-top:8px}
+  .missing .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .missing a{display:inline-flex;align-items:center;min-height:44px;padding:4px 12px;border-radius:999px;
+    background:#fff;border:1px solid #f0d4ad;color:#8a5a1e;text-decoration:none;font-weight:700;font-size:14px}
+  .missing .more-n{display:inline-flex;align-items:center;min-height:44px;padding:4px 4px;font-weight:700}
+  .copybtn{margin-top:10px;background:var(--rose-btn);color:#fff;width:100%}
+  .done{color:var(--ok);font-weight:700;text-align:center;margin-top:8px;min-height:0}
+  .done:empty{margin:0}
+  .done.fail{color:var(--alert)}
+  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>正式上線・請確認</h1>
+    <p>國際直播團購平台　給泡泡的上線決策清單<span class="nw">（2026-10-01）</span></p>
+  </header>
+
+  <div class="intro">
+    <p>Livia 已經把正式上線前的 19 個問題逐題回答完，有些是你負責拍板的，<b>需要你點頭</b>；另外有幾題 Livia 回答不了，<b>要你決定</b>。</p>
+    <p>這份共 <b>36 題要回</b>（第一部分 15 條、第二部分 21 題）；第三、四部分可以之後再給。</p>
+    <p><b>★ 標記的 3 題最優先</b>（Q1 會計後台權限、Q4 多家廠商運費、Q6 部分放平台倉——會影響帳號權限和運費的系統做法），麻煩先回。</p>
+    <p>每題點一下就好，有想法可以點「＋ 補充」寫幾句。填完按最下面的「<b>產生我的回覆</b>」，複製後<b>用 LINE 傳給 Livia</b>。沒填完也可以先傳，之後補上再按一次<span id="saveHint">（答案會暫存在這台裝置的瀏覽器）</span>。</p>
+    <p class="secret">⚠ 本頁含內部營運資訊，請勿轉傳給廠商或通路主。</p>
+  </div>
+  <div class="alertbox storewarn" id="storeWarn" role="alert" hidden>⚠ 這個瀏覽器<b>無法暫存</b>填答（例如無痕模式或部分 App 內建瀏覽器）：重新整理或關掉頁面，答案就會不見。請一次填完，按「產生我的回覆」傳出。</div>
+
+  <div class="progress" id="progress">
+    <div class="row"><span>已作答 <b id="pDone">0</b>／<span id="pTotal">0</span> 題</span><span class="side" id="pSide"></span></div>
+    <span class="pwarn" id="pWarn" hidden>⚠ 無法暫存，請一次填完再傳</span>
+    <span class="pbar" aria-hidden="true"><i id="pFill"></i></span>
+  </div>
+  <div class="sr" id="srLive" aria-live="polite"></div>
+
+  <h2 class="part-h">第一部分：Livia 已定的事，請你點頭</h2>
+  <p class="part-sub">每條回「同意」或「要討論」；有想法可以點「＋ 補充」寫幾句，可以只針對其中一小點（例如「第 8 條③」）。</p>
+  <section class="card p1" id="p1-1" data-id="一-1" data-short="營運公司" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-1-t" aria-describedby="p1-1-d">
+    <div class="p1head"><span class="num" aria-hidden="true">1</span><div class="p1text"><span id="p1-1-t"><span class="sr">第一部分第 1 條：</span><b>營運公司</b></span><span id="p1-1-d">：用已有的公司營運（收款、發票、簽約都用這家）；會請會計師確認公司的營業項目有包含批發、國際貿易。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-1" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-1" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-1-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-1-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-2" data-id="一-2" data-short="交易方式（暫定）" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-2-t" aria-describedby="p1-2-d">
+    <div class="p1head"><span class="num" aria-hidden="true">2</span><div class="p1text"><span id="p1-2-t"><span class="sr">第一部分第 2 條：</span><b>交易方式</b><span class="tnote">（暫定：最終以會計師＋律師確認為準）</span></span><span id="p1-2-d">：我們理解是「平台向廠商進貨、再賣給通路主」，平台是買賣的一方。這代表平台要對通路主<b>全額開發票</b>，也要負<b>賣方責任</b>（商品瑕疵、產品責任）。<b>這和 PRD 原本寫的「代收代付」不同</b>。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-2" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-2" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-2-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-2-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-3" data-id="一-3" data-short="管理員名單" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-3-t" aria-describedby="p1-3-d">
+    <div class="p1head"><span class="num" aria-hidden="true">3</span><div class="p1text"><span id="p1-3-t"><span class="sr">第一部分第 3 條：</span><b>管理員（看得到全部成本價的人）</b></span><span id="p1-3-d">：首批 Livia、小臻，之後再加內部同仁。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-3" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-3" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-3-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-3-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-4" data-id="一-4" data-short="資料庫付費方案" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-4-t" aria-describedby="p1-4-d">
+    <div class="p1head"><span class="num" aria-hidden="true">4</span><div class="p1text"><span id="p1-4-t"><span class="sr">第一部分第 4 條：</span><b>資料庫升級付費方案</b></span><span id="p1-4-d">：每月約 US$25 起，含每日自動備份，也不會像免費方案那樣自動暫停；「時間點還原」（可以把資料還原到任一時間點）是否另外收費還待確認，實際金額可能比 US$25 高。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-4" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-4" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-4-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-4-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-5" data-id="一-5" data-short="收款" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-5-t" aria-describedby="p1-5-d">
+    <div class="p1head"><span class="num" aria-hidden="true">5</span><div class="p1text"><span id="p1-5-t"><span class="sr">第一部分第 5 條：</span><b>收款</b></span><span id="p1-5-d">：公司帳戶已開好；<b>收款戶名要跟開發票的公司同一家</b>；對帳由小臻＋會計負責。收款帳號要交給技術，換掉付款頁上目前的示範帳號（帳號請私下傳，見第三部分）。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-5" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-5" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-5-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-5-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-6" data-id="一-6" data-short="毛利門檻" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-6-t" aria-describedby="p1-6-d">
+    <div class="p1head"><span class="num" aria-hidden="true">6</span><div class="p1text"><span id="p1-6-t"><span class="sr">第一部分第 6 條：</span><b>毛利門檻</b></span><span id="p1-6-d">：先沿用目前後台設定的各類別數值（<b>數值 Livia 另外私訊給你</b>，本頁不列），上線後依實際經驗再調。算法是「（批發價－成本）÷批發價」；批發價要用含稅還是未稅來算，等會計師確認後再對齊。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-6" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-6" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-6-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-6-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-7" data-id="一-7" data-short="付款期限 3 天" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-7-t" aria-describedby="p1-7-d p1-7-s">
+    <div class="p1head"><span class="num" aria-hidden="true">7</span><div class="p1text"><span id="p1-7-t"><span class="sr">第一部分第 7 條：</span><b>付款期限 3 天</b></span><span id="p1-7-d">：</span><ul class="subpts" id="p1-7-s"><li>① 逾期先用後台、LINE、簡訊、Email 提醒通路主，再由人工取消（不自動取消）。</li><li>② 後台列出「已逾期／快逾期」的訂單。</li><li>③ 管理端 LINE 每天推「要跟進的清單」。</li><li>④ 費用提醒：簡訊每則計費；LINE 官方帳號依訊息量可能要付費方案（金額待確認）。</li></ul></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-7" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-7" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-7-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-7-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-8" data-id="一-8" data-short="運費" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-8-t" aria-describedby="p1-8-d p1-8-s">
+    <div class="p1head"><span class="num" aria-hidden="true">8</span><div class="p1text"><span id="p1-8-t"><span class="sr">第一部分第 8 條：</span><b>運費</b><span class="tnote">（取代 7 月 8 日「運費不計價」的定案）</span></span><span id="p1-8-d">：</span><ul class="subpts" id="p1-8-s"><li>① 台灣當地基本運費 NT$100、含兩箱；超過兩箱由平台人工聯絡補運費。</li><li>② 設「滿額免運」，門檻金額和怎麼算請你在 Q11、Q12 決定。</li><li>③ 廠商上架必填「箱規（一箱幾件）」，通路主選物時會看到「預估約幾箱」（實際以出貨為準）。</li><li>④ 海外貨先報商品價、後報運費（附初估和過去一個月平均）。</li><li>⑤ 提醒：NT$100 比黑貓最小箱的一般寄件價（約 130 元）還低，一張單只寄 1 個中大件時約賠 110 元；技術評估建議拿到物流公司簽約價後，再檢視這個金額。冷藏冷凍、離島、超大件怎麼收，請見 Q14。</li></ul></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-8" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-8" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-8-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-8-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-9" data-id="一-9" data-short="退換貨" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-9-t" aria-describedby="p1-9-d p1-9-s">
+    <div class="p1head"><span class="num" aria-hidden="true">9</span><div class="p1text"><span id="p1-9-t"><span class="sr">第一部分第 9 條：</span><b>退換貨</b></span><span id="p1-9-d">：</span><ul class="subpts" id="p1-9-s"><li>① 收貨 2 天內、只收瑕疵／寄錯。</li><li>② 用後台、LINE、簡訊、Email 提醒通路主驗收；2 天內沒驗收，系統自動算驗收。</li><li>③ 退換貨的<b>寄回運費</b>：誰寄錯誰付（廠商出貨錯→廠商付、平台倉出貨錯→平台付）；瑕疵由廠商付。下單時已收的運費退不退，請見 Q16、Q17。</li><li>④ 註冊、下單、付款時都跳出提醒，要勾同意。</li><li>⑤ 退款匯回通路主帳戶。</li><li>⑥ 以上規則還要請律師審閱，並寫進合約。</li></ul></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-9" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-9" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-9-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-9-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-10" data-id="一-10" data-short="團購主月費" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-10-t" aria-describedby="p1-10-d">
+    <div class="p1head"><span class="num" aria-hidden="true">10</span><div class="p1text"><span id="p1-10-t"><span class="sr">第一部分第 10 條：</span><b>團購主月費</b></span><span id="p1-10-d">：上線初期全免費，之後再定金額和開始收費的時間。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-10" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-10" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-10-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-10-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-11" data-id="一-11" data-short="標單" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-11-t" aria-describedby="p1-11-d">
+    <div class="p1head"><span class="num" aria-hidden="true">11</span><div class="p1text"><span id="p1-11-t"><span class="sr">第一部分第 11 條：</span><b>標單</b></span><span id="p1-11-d">：每個商品對直播主都走標單（不公開價格），直播主依「品牌」或「品項」送出「索取標單」；<b>團購主照舊看公開批發價</b>（不走標單）。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-11" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-11" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-11-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-11-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-12" data-id="一-12" data-short="廠商看得到的價格" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-12-t" aria-describedby="p1-12-d">
+    <div class="p1head"><span class="num" aria-hidden="true">12</span><div class="p1text"><span id="p1-12-t"><span class="sr">第一部分第 12 條：</span><b>廠商看得到的價格</b></span><span id="p1-12-d">：廠商只看得到品項、數量和自己的供貨價，<b>看不到通路主那一端的單價</b>。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-12" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-12" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-12-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-12-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-13" data-id="一-13" data-short="客服窗口" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-13-t" aria-describedby="p1-13-d">
+    <div class="p1head"><span class="num" aria-hidden="true">13</span><div class="p1text"><span id="p1-13-t"><span class="sr">第一部分第 13 條：</span><b>客服窗口</b></span><span id="p1-13-d">：LINE 官方帳號＋Email（LINE 官方帳號依訊息量可能要付費方案，金額待確認）。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-13" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-13" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-13-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-13-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-14" data-id="一-14" data-short="操作指南" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-14-t" aria-describedby="p1-14-d">
+    <div class="p1head"><span class="num" aria-hidden="true">14</span><div class="p1text"><span id="p1-14-t"><span class="sr">第一部分第 14 條：</span><b>封測導覽頁</b></span><span id="p1-14-d">：改成依身份（廠商／直播主／團購主）的操作指南，正式站加「一步一步帶操作」的引導視窗；封測工單清掉前先另存一份。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-14" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-14" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-14-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-14-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+  <section class="card p1" id="p1-15" data-id="一-15" data-short="專業人士" data-kind="agree" data-part="1" role="group" aria-labelledby="p1-15-t" aria-describedby="p1-15-d">
+    <div class="p1head"><span class="num" aria-hidden="true">15</span><div class="p1text"><span id="p1-15-t"><span class="sr">第一部分第 15 條：</span><b>專業人士</b></span><span id="p1-15-d">：會計師、律師、報關行都已有配合對象，直接約談（帶整理好的問題清單去問）。</span></div></div>
+    <div class="seg">
+      <label class="opt"><input type="radio" name="p1-15" value="同意" data-label="同意"><span class="ot">同意</span></label>
+      <label class="opt" data-tone="warn"><input type="radio" name="p1-15" value="要討論" data-label="要討論"><span class="ot">要討論</span></label>
+    </div>
+    <details class="more">
+      <summary>＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</summary>
+      <label class="sr" for="p1-15-reason">＋ 補充／想討論的地方（可留空；選「要討論」時請寫）</label>
+      <textarea class="note field" id="p1-15-reason" data-role="reason" rows="2" placeholder="可以只寫其中一小點，例如「③ 想再談」"></textarea>
+    </details>
+  </section>
+
+  <h2 class="part-h">第二部分：要你決定的事</h2>
+  <div class="warnbox" id="starhint">
+    <b>★ 標記的 3 題最優先</b>（會影響帳號權限和運費的系統做法），麻煩先回：
+    <div class="starlinks"><a href="#q1">★ Q1 會計後台權限</a><a href="#q4">★ Q4 多家廠商運費</a><a href="#q6">★ Q6 部分放平台倉</a></div>
+  </div>
+  <h3 class="sub-h">帳號與權限</h3>
+  <section class="card star" id="q1" data-id="Q1" data-short="會計後台權限" data-kind="choice" data-part="2" role="group" aria-labelledby="q1-g q1-t" aria-describedby="q1-d">
+    <span class="qtag key" id="q1-g">★ Q1・最優先</span>
+    <div class="qtitle" id="q1-t">會計要不要開後台權限？</div>
+    <p class="qdesc" id="q1-d">後台按「確認入帳」需要管理員權限，而管理員<b>看得到全部成本價</b>。</p>
+    <label class="opt"><input type="radio" name="Q1" value="A" data-label="會計不開帳號，確認入帳由小臻按"><span><span class="ot">A.</span> 會計不開帳號，只核對網銀；後台的「確認入帳」由小臻按。代價：每筆入帳都要等小臻手動按，小臻請假時要有人代理</span></label>
+    <label class="opt"><input type="radio" name="Q1" value="B" data-label="會計也開管理員帳號"><span><span class="ot">B.</span> 會計也開管理員帳號（可以自己按，但看得到全部成本價）</span></label>
+    <label class="opt"><input type="radio" name="Q1" value="C" data-label="另做只能確認入帳的會計帳號"><span><span class="ot">C.</span> 另外做一種「只能確認入帳、看不到成本價」的帳號給會計（要多花開發時間）</span></label>
+    <label class="opt"><input type="radio" name="Q1" value="D" data-label="其他"><span><span class="ot">D.</span> 其他（一句話說明）</span></label>
+    <div class="cond" data-when="D" hidden>
+      <label class="flabel" for="q1-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q1-other" data-role="other" data-short="Q1 其他" data-need="1" autocomplete="off" placeholder="一句話說明你的想法">
+    </div>
+    <div class="extra">
+      <label class="flabel" for="q1-x1">也請告訴我們會計是誰。</label>
+      <input type="text" class="note field" id="q1-x1" data-role="extra" data-fmt="會計：{v}" data-short="會計是誰" autocomplete="off" data-need="1" placeholder="會計的名字或事務所">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q1-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q1-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q2" data-id="Q2" data-short="泡泡管理員帳號" data-kind="choice" data-part="2" role="group" aria-labelledby="q2-g q2-t" aria-describedby="q2-a">
+    <span class="qtag" id="q2-g">Q2</span>
+    <div class="qtitle" id="q2-t">你自己要不要開管理員帳號？<span class="tnote">（目前名單還沒有你）</span></div>
+    <label class="opt"><input type="radio" name="Q2" value="A" data-label="要開"><span><span class="ot">A.</span> 要（請提供你的 Google 信箱）</span></label>
+    <label class="opt"><input type="radio" name="Q2" value="B" data-label="不用開"><span><span class="ot">B.</span> 不用，需要時請 Livia 或小臻看</span></label>
+    <div class="cond" data-when="A" hidden>
+      <label class="flabel" for="q2-x1">你的 Google 信箱</label>
+      <input type="email" class="note field" id="q2-x1" data-role="extra" data-fmt="泡泡信箱：{v}" data-short="泡泡信箱" autocomplete="email" data-need="1" placeholder="name@gmail.com">
+    </div>
+    <div class="extra">
+      <label class="flabel" for="q2-x2">也請提供小臻的 Google 信箱。</label>
+      <input type="email" class="note field" id="q2-x2" data-role="extra" data-fmt="小臻信箱：{v}" data-short="小臻信箱" autocomplete="off" data-need="1" placeholder="小臻的 Google 信箱">
+    </div>
+    <div class="infobox" id="q2-a">選 B 的話，上線排程裡寫「泡泡或小臻」負責的後台工作（輸入正式毛利門檻、每日巡檢、上線前的完整演練）就都會落在小臻身上。</div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q2-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q2-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q3" data-id="Q3" data-short="資料庫費用誰出" data-kind="choice" data-part="2" role="group" aria-labelledby="q3-g q3-t" aria-describedby="q3-d">
+    <span class="qtag" id="q3-g">Q3</span>
+    <div class="qtitle" id="q3-t">資料庫付費方案（每月約 US$25 起）由誰出？</div>
+    <p class="qdesc" id="q3-d">「時間點還原」是否另外收費還待確認，實際金額可能比 US$25 高。</p>
+    <label class="opt"><input type="radio" name="Q3" value="A" data-label="公司出"><span><span class="ot">A.</span> 公司出</span></label>
+    <label class="opt"><input type="radio" name="Q3" value="B" data-label="Livia 先出"><span><span class="ot">B.</span> Livia 先出</span></label>
+    <label class="opt"><input type="radio" name="Q3" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q3-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q3-other" data-role="other" data-short="Q3 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q3-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q3-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <h3 class="sub-h">運費</h3>
+  <div class="infobox subnote">先解釋一個詞：<b>出貨單</b>＝同一家廠商、從同一個地方出貨（平台倉或廠商自己）、同一次寄到同一個地址的貨（可能一箱，也可能好幾箱）。選項後面標「評估建議」的，是技術做的運費評估報告的建議，只供參考，請照你的判斷選。</div>
+  <section class="card star" id="q4" data-id="Q4" data-short="多家廠商運費" data-kind="choice" data-part="2" role="group" aria-labelledby="q4-g q4-t" aria-describedby="q4-d">
+    <span class="qtag key" id="q4-g">★ Q4・最優先</span>
+    <div class="qtitle" id="q4-t">一次叫貨買了好幾家廠商的貨，運費怎麼收？</div>
+    <p class="qdesc" id="q4-d">例：團購主一次跟甲、乙、丙三家廠商叫貨，三家各自出貨。</p>
+    <label class="opt"><input type="radio" name="Q4" value="A" data-label="每家廠商每次出貨各收一筆"><span><span class="ot">A.</span> 每家廠商每次出貨各收一筆 NT$100（含兩箱）→ 這個例子收 300 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q4" value="B" data-label="整次叫貨只收一次"><span><span class="ot">B.</span> 整次叫貨只收一次 NT$100 → 多寄的運費由平台負擔；系統目前沒有「一次跟多家廠商叫貨」的購物車，選 B 要多做開發</span></label>
+    <label class="opt"><input type="radio" name="Q4" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q4-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q4-other" data-role="other" data-short="Q4 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q4-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q4-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q5" data-id="Q5" data-short="廠商自己出貨運費" data-kind="choice" data-part="2" role="group" aria-labelledby="q5-g q5-t" aria-describedby="q5-d">
+    <span class="qtag" id="q5-g">Q5</span>
+    <div class="qtitle" id="q5-t">廠商自己出貨時，運費誰收、誰付？</div>
+    <p class="qdesc" id="q5-d">牽涉到錢，結果要寫進廠商合約。</p>
+    <label class="opt"><input type="radio" name="Q5" value="A" data-label="平台收、付廠商實際運費"><span><span class="ot">A.</span> 平台向通路主收運費，再付給廠商實際花的運費</span></label>
+    <label class="opt"><input type="radio" name="Q5" value="B" data-label="平台收、付廠商固定補貼"><span><span class="ot">B.</span> 平台向通路主收運費，付給廠商固定補貼</span></label>
+    <label class="opt"><input type="radio" name="Q5" value="C" data-label="供貨價已含運，運費不轉給廠商"><span><span class="ot">C.</span> 廠商的供貨價已含運費，平台向通路主收的運費不轉給廠商</span></label>
+    <label class="opt"><input type="radio" name="Q5" value="D" data-label="達免運門檻後由廠商吸收"><span><span class="ot">D.</span> 達到免運門檻後，運費由廠商吸收（momo 的做法）</span></label>
+    <label class="opt"><input type="radio" name="Q5" value="E" data-label="其他"><span><span class="ot">E.</span> 其他（要跟廠商談的話，請寫你傾向的方向）</span></label>
+    <div class="cond" data-when="E" hidden>
+      <label class="flabel" for="q5-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q5-other" data-role="other" data-short="Q5 其他" data-need="1" autocomplete="off" placeholder="要跟廠商談的話，寫你傾向的方向">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q5-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q5-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card star" id="q6" data-id="Q6" data-short="部分放平台倉" data-kind="choice" data-part="2" role="group" aria-labelledby="q6-g q6-t" aria-describedby="q6-a">
+    <span class="qtag key" id="q6-g">★ Q6・最優先</span>
+    <div class="qtitle" id="q6-t">上線時，會不會有同一家廠商「一部分貨放平台倉、一部分自己出」？</div>
+    <label class="opt"><input type="radio" name="Q6" value="A" data-label="不會"><span><span class="ot">A.</span> 不會，一家廠商只有一種出貨方式</span></label>
+    <label class="opt"><input type="radio" name="Q6" value="B" data-label="會"><span><span class="ot">B.</span> 會</span></label>
+    <label class="opt"><input type="radio" name="Q6" value="C" data-label="還不確定"><span><span class="ot">C.</span> 還不確定</span></label>
+    <div class="infobox" id="q6-a">這題會決定系統怎麼做，<b>請照實際狀況回答</b>。選 B，系統要多做一層「出貨單」，工時會增加；不確定就選 C，之後要先確認清楚，才能定系統做法。</div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q6-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q6-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q7" data-id="Q7" data-short="現貨＋海外同一單" data-kind="choice" data-part="2" role="group" aria-labelledby="q7-g q7-t">
+    <span class="qtag" id="q7-g">Q7</span>
+    <div class="qtitle" id="q7-t">同一家廠商的現貨和海外商品在同一張單（出貨時間不同），運費怎麼收？</div>
+    <label class="opt"><input type="radio" name="Q7" value="A" data-label="分兩次出貨、各收一筆"><span><span class="ot">A.</span> 分兩次出貨、各收一筆 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q7" value="B" data-label="等貨到齊一起出、收一筆"><span><span class="ot">B.</span> 等貨到齊一起出、收一筆</span></label>
+    <label class="opt"><input type="radio" name="Q7" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q7-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q7-other" data-role="other" data-short="Q7 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q7-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q7-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q8" data-id="Q8" data-short="平台倉含運含哪段" data-kind="choice" data-part="2" role="group" aria-labelledby="q8-g q8-t" aria-describedby="q8-d">
+    <span class="qtag" id="q8-g">Q8</span>
+    <div class="qtitle" id="q8-t">放在平台倉的商品，廠商上架時勾了「已含運費」，含的是哪一段？</div>
+    <p class="qdesc" id="q8-d">「已含運費」是指廠商給平台的價格（供貨價）已經含運費。這題會影響平台倉的商品要不要收運費。</p>
+    <label class="opt"><input type="radio" name="Q8" value="A" data-label="只含寄到平台倉"><span><span class="ot">A.</span> 只含「廠商寄到平台倉」，平台倉寄給通路主的運費另外收</span></label>
+    <label class="opt"><input type="radio" name="Q8" value="B" data-label="含到通路主手上"><span><span class="ot">B.</span> 含到通路主手上，不再另收</span></label>
+    <label class="opt"><input type="radio" name="Q8" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q8-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q8-other" data-role="other" data-short="Q8 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q8-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q8-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q9" data-id="Q9" data-short="已含運商品怎麼算" data-kind="choice" data-part="2" role="group" aria-labelledby="q9-g q9-t" aria-describedby="q9-d">
+    <span class="qtag" id="q9-g">Q9</span>
+    <div class="qtitle" id="q9-t">廠商勾了「已含運費」的商品，運費和免運門檻怎麼算？</div>
+    <p class="qdesc" id="q9-d">大廳現在會對通路主顯示「含運費」標籤；如果照樣收 NT$100，通路主可能覺得被重複收費。</p>
+    <label class="opt"><input type="radio" name="Q9" value="A" data-label="不收運費，但金額算進免運門檻"><span><span class="ot">A.</span> 不收運費，但金額算進免運門檻 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q9" value="B" data-label="不收運費，也不算進免運門檻"><span><span class="ot">B.</span> 不收運費，也不算進免運門檻</span></label>
+    <label class="opt"><input type="radio" name="Q9" value="C" data-label="取消勾選，一律照新規則收"><span><span class="ot">C.</span> 取消「已含運費」這個勾選，一律照新的運費規則收</span></label>
+    <label class="opt"><input type="radio" name="Q9" value="D" data-label="其他"><span><span class="ot">D.</span> 其他</span></label>
+    <div class="cond" data-when="D" hidden>
+      <label class="flabel" for="q9-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q9-other" data-role="other" data-short="Q9 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q9-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q9-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q10" data-id="Q10" data-short="含運＋不含運混一張" data-kind="choice" data-part="2" role="group" aria-labelledby="q10-g q10-t">
+    <span class="qtag" id="q10-g">Q10</span>
+    <div class="qtitle" id="q10-t">同一張出貨單裡，有勾「已含運費」和沒勾的商品混在一起，運費怎麼收？</div>
+    <label class="opt"><input type="radio" name="Q10" value="A" data-label="有沒含運的就照收一筆"><span><span class="ot">A.</span> 只要有一件沒含運的商品，就照收一筆 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q10" value="B" data-label="只按沒含運的部分算"><span><span class="ot">B.</span> 只按沒含運的那部分算（例如箱數只算沒含運的商品）</span></label>
+    <label class="opt"><input type="radio" name="Q10" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q10-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q10-other" data-role="other" data-short="Q10 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q10-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q10-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q11" data-id="Q11" data-short="免運門檻金額" data-kind="choice" data-part="2" role="group" aria-labelledby="q11-g q11-t" aria-describedby="q11-d">
+    <span class="qtag" id="q11-g">Q11</span>
+    <div class="qtitle" id="q11-t">免運門檻設多少？</div>
+    <p class="qdesc" id="q11-d">Livia 已定的方向是「滿額免運」，金額要你決定。參考：零售電商大約滿 NT$350～490 免運；台灣批發同業有「滿 NT$5,000 免運」。技術評估建議拿到物流公司報價、試算後再定。</p>
+    <label class="opt"><input type="radio" name="Q11" value="A" data-label="設定金額"><span><span class="ot">A.</span> 滿 NT$＿＿＿ 免運</span></label>
+    <label class="opt"><input type="radio" name="Q11" value="B" data-label="等拿到物流公司報價再定"><span><span class="ot">B.</span> 等拿到物流公司報價再定 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q11" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q11-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q11-other" data-role="other" data-short="Q11 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <div class="cond" data-when="A" hidden>
+      <label class="flabel" for="q11-x1">滿多少免運？（NT$，填數字）</label>
+      <input type="text" class="note field" id="q11-x1" data-role="extra" data-fmt="滿 NT${v} 免運" data-short="免運金額" autocomplete="off" data-need="1" inputmode="numeric" placeholder="填數字">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q11-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q11-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q12" data-id="Q12" data-short="免運門檻怎麼算" data-kind="choice" data-part="2" role="group" aria-labelledby="q12-g q12-t" aria-describedby="q12-d">
+    <span class="qtag" id="q12-g">Q12</span>
+    <div class="qtitle" id="q12-t">免運門檻要怎麼算金額？</div>
+    <p class="qdesc" id="q12-d">例：同一次跟兩家廠商叫貨，每家單獨都沒到門檻，加起來有到，算不算免運？</p>
+    <label class="opt"><input type="radio" name="Q12" value="A" data-label="每張出貨單各自算"><span><span class="ot">A.</span> 每張出貨單各自算 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q12" value="B" data-label="整次叫貨合計"><span><span class="ot">B.</span> 整次叫貨合計（對通路主最友善；但系統沒有購物車要多做開發，多寄的運費由平台負擔）</span></label>
+    <label class="opt"><input type="radio" name="Q12" value="C" data-label="平台倉合計、廠商出貨各自算"><span><span class="ot">C.</span> 只有平台倉的貨合計，廠商自己出貨的各自算</span></label>
+    <label class="opt"><input type="radio" name="Q12" value="D" data-label="其他"><span><span class="ot">D.</span> 其他</span></label>
+    <div class="cond" data-when="D" hidden>
+      <label class="flabel" for="q12-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q12-other" data-role="other" data-short="Q12 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q12-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q12-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q13" data-id="Q13" data-short="超過兩箱 vs 3 天期限" data-kind="choice" data-part="2" role="group" aria-labelledby="q13-g q13-t">
+    <span class="qtag" id="q13-g">Q13</span>
+    <div class="qtitle" id="q13-t">超過兩箱要補運費時，跟 3 天付款期限怎麼配合？</div>
+    <label class="opt"><input type="radio" name="Q13" value="A" data-label="先付商品款，出貨前另收補運費"><span><span class="ot">A.</span> 先付商品款，補的運費在出貨前另外收</span></label>
+    <label class="opt"><input type="radio" name="Q13" value="B" data-label="先報補運費，報價後才開始倒數"><span><span class="ot">B.</span> 平台先報好補的運費，3 天付款倒數從報價後才開始</span></label>
+    <label class="opt"><input type="radio" name="Q13" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q13-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q13-other" data-role="other" data-short="Q13 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q13-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q13-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q14" data-id="Q14" data-short="冷藏、離島、超大件" data-kind="choice" data-part="2" role="group" aria-labelledby="q14-g q14-t" aria-describedby="q14-d">
+    <span class="qtag" id="q14-g">Q14</span>
+    <div class="qtitle" id="q14-t">冷藏冷凍、離島、超大件（超過 150 公分或 20 公斤）的運費怎麼收？</div>
+    <p class="qdesc" id="q14-d">這幾種情況物流成本高很多，有些地方物流公司不收件（例如蘭嶼黑貓不收件）。</p>
+    <label class="opt"><input type="radio" name="Q14" value="A" data-label="平台個別報價"><span><span class="ot">A.</span> 由平台個別報價；報好運費後，3 天付款倒數才開始 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q14" value="B" data-label="基本運費＋固定加價"><span><span class="ot">B.</span> 基本運費再加一筆固定金額（金額之後定）</span></label>
+    <label class="opt"><input type="radio" name="Q14" value="C" data-label="一樣收 NT$100"><span><span class="ot">C.</span> 一樣收 NT$100（含兩箱），不另加</span></label>
+    <label class="opt"><input type="radio" name="Q14" value="D" data-label="其他"><span><span class="ot">D.</span> 其他</span></label>
+    <div class="cond" data-when="D" hidden>
+      <label class="flabel" for="q14-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q14-other" data-role="other" data-short="Q14 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q14-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q14-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <h3 class="sub-h">付款與退款</h3>
+  <section class="card" id="q15" data-id="Q15" data-short="退款匯費" data-kind="choice" data-part="2" role="group" aria-labelledby="q15-g q15-t">
+    <span class="qtag" id="q15-g">Q15</span>
+    <div class="qtitle" id="q15-t">退款匯回通路主時，匯費誰付？</div>
+    <label class="opt"><input type="radio" name="Q15" value="A" data-label="平台付"><span><span class="ot">A.</span> 平台付</span></label>
+    <label class="opt"><input type="radio" name="Q15" value="B" data-label="依責任歸屬"><span><span class="ot">B.</span> 依責任歸屬（誰的錯誰付）</span></label>
+    <label class="opt"><input type="radio" name="Q15" value="C" data-label="通路主付"><span><span class="ot">C.</span> 通路主付</span></label>
+    <div class="extra">
+      <label class="flabel" for="q15-x1">退款由誰負責匯出？</label>
+      <input type="text" class="note field" id="q15-x1" data-role="extra" data-fmt="退款匯出：{v}" data-short="退款匯出的人" autocomplete="off" data-need="1" placeholder="負責匯出退款的人">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q15-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q15-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q16" data-id="Q16" data-short="退貨原運費" data-kind="choice" data-part="2" role="group" aria-labelledby="q16-g q16-t" aria-describedby="q16-d">
+    <span class="qtag" id="q16-g">Q16</span>
+    <div class="qtitle" id="q16-t">退貨時，下單時已經收的運費退不退？</div>
+    <p class="qdesc" id="q16-d">第一部分第 9 條定的是「寄回運費」誰付；這題問的是下單時已經收的那筆運費。</p>
+    <label class="opt"><input type="radio" name="Q16" value="A" data-label="依責任歸屬，出錯方連運費一起退"><span><span class="ot">A.</span> 依責任歸屬：廠商或平台出錯，就連原本的運費一起退 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q16" value="B" data-label="一律不退"><span><span class="ot">B.</span> 一律不退原本的運費</span></label>
+    <label class="opt"><input type="radio" name="Q16" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q16-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q16-other" data-role="other" data-short="Q16 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q16-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q16-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q17" data-id="Q17" data-short="補寄單運費" data-kind="choice" data-part="2" role="group" aria-labelledby="q17-g q17-t">
+    <span class="qtag" id="q17-g">Q17</span>
+    <div class="qtitle" id="q17-t">換貨補寄的那張新單，收不收運費？</div>
+    <label class="opt"><input type="radio" name="Q17" value="A" data-label="免收"><span><span class="ot">A.</span> 免收 <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q17" value="B" data-label="照收"><span><span class="ot">B.</span> 照收</span></label>
+    <label class="opt"><input type="radio" name="Q17" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q17-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q17-other" data-role="other" data-short="Q17 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q17-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q17-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q18" data-id="Q18" data-short="向廠商下單與通知出貨" data-kind="choice" data-part="2" role="group" aria-labelledby="q18-g q18-t">
+    <span class="qtag" id="q18-g">Q18</span>
+    <div class="qtitle" id="q18-t">向廠商下單、通知廠商出貨，由誰負責、用什麼方式？</div>
+    <label class="opt"><input type="radio" name="Q18" value="A" data-label="平台人工通知"><span><span class="ot">A.</span> 上線先由平台人工通知廠商（LINE、電話等） <span class="rec">評估建議</span></span></label>
+    <label class="opt"><input type="radio" name="Q18" value="B" data-label="上線就做廠商後台出貨單"><span><span class="ot">B.</span> 上線就讓廠商在後台看到自己要出的單（要多做開發）</span></label>
+    <label class="opt"><input type="radio" name="Q18" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q18-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q18-other" data-role="other" data-short="Q18 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <div class="extra">
+      <label class="flabel" for="q18-x1">負責向廠商下單、通知出貨的人</label>
+      <input type="text" class="note field" id="q18-x1" data-role="extra" data-fmt="負責人：{v}" data-short="下單通知負責人" autocomplete="off" data-need="1" placeholder="負責的人">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q18-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q18-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q19" data-id="Q19" data-short="付廠商貨款時間" data-kind="choice" data-part="2" role="group" aria-labelledby="q19-g q19-t">
+    <span class="qtag" id="q19-g">Q19</span>
+    <div class="qtitle" id="q19-t">付廠商貨款，什麼時候付？</div>
+    <label class="opt"><input type="radio" name="Q19" value="A" data-label="收款後幾天內付"><span><span class="ot">A.</span> 收到通路主貨款後 ＿＿ 天內付給廠商</span></label>
+    <label class="opt"><input type="radio" name="Q19" value="B" data-label="月結"><span><span class="ot">B.</span> 月結（每月結算一次，結算後 ＿＿ 天內付）</span></label>
+    <label class="opt"><input type="radio" name="Q19" value="C" data-label="預付或訂金"><span><span class="ot">C.</span> 預付或訂金（先付款，廠商才出貨；海外進貨常見）</span></label>
+    <label class="opt"><input type="radio" name="Q19" value="D" data-label="其他"><span><span class="ot">D.</span> 其他</span></label>
+    <div class="cond" data-when="D" hidden>
+      <label class="flabel" for="q19-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q19-other" data-role="other" data-short="Q19 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <div class="cond" data-when="A" hidden>
+      <label class="flabel" for="q19-x1">收款後幾天內付？（填數字）</label>
+      <input type="text" class="note field" id="q19-x1" data-role="extra" data-fmt="{v} 天內付" data-short="付款天數" autocomplete="off" data-need="1" inputmode="numeric" placeholder="填數字">
+    </div>
+    <div class="cond" data-when="B" hidden>
+      <label class="flabel" for="q19-x2">月結後幾天內付？（填數字）</label>
+      <input type="text" class="note field" id="q19-x2" data-role="extra" data-fmt="結算後 {v} 天內付" data-short="月結天數" autocomplete="off" data-need="1" inputmode="numeric" placeholder="填數字">
+    </div>
+    <div class="extra">
+      <label class="flabel" for="q19-x3">負責付廠商貨款的人</label>
+      <input type="text" class="note field" id="q19-x3" data-role="extra" data-fmt="付款負責人：{v}" data-short="付款負責人" autocomplete="off" data-need="1" placeholder="負責的人">
+    </div>
+    <div class="extra">
+      <label class="flabel" for="q19-x4">海外廠商的跨境匯款（匯費、匯差誰負擔）怎麼處理？（可留空，之後再談）</label>
+      <input type="text" class="note field" id="q19-x4" data-role="extra" data-fmt="跨境匯款：{v}" data-short="跨境匯款" autocomplete="off" data-optional="1" placeholder="可留空">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q19-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q19-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <h3 class="sub-h">價格與簽約狀態誰看得到</h3>
+  <section class="card" id="q20" data-id="Q20" data-short="團購主看批發價時機" data-kind="choice" data-part="2" role="group" aria-labelledby="q20-g q20-t" aria-describedby="q20-d">
+    <span class="qtag" id="q20-g">Q20</span>
+    <div class="qtitle" id="q20-t">團購主什麼時候看得到批發價和利潤空間？</div>
+    <p class="qdesc" id="q20-d">（目前暫定：開通帳號就看得到，簽約該廠商後才能下單）</p>
+    <label class="opt"><input type="radio" name="Q20" value="A" data-label="照暫定"><span><span class="ot">A.</span> 照暫定</span></label>
+    <label class="opt"><input type="radio" name="Q20" value="B" data-label="簽約該廠商後才看得到"><span><span class="ot">B.</span> 簽約該廠商後才看得到</span></label>
+    <label class="opt"><input type="radio" name="Q20" value="C" data-label="其他"><span><span class="ot">C.</span> 其他</span></label>
+    <div class="cond" data-when="C" hidden>
+      <label class="flabel" for="q20-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q20-other" data-role="other" data-short="Q20 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q20-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q20-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <section class="card" id="q21" data-id="Q21" data-short="簽約狀態誰看得到" data-kind="choice" data-part="2" role="group" aria-labelledby="q21-g q21-t" aria-describedby="q21-d">
+    <span class="qtag" id="q21-g">Q21</span>
+    <div class="qtitle" id="q21-t">簽約狀態誰看得到？</div>
+    <p class="qdesc" id="q21-d">（目前暫定：通路主只看得到自己跟各廠商的簽約狀態；廠商看得到自己跟各通路主的簽約狀態）</p>
+    <label class="opt"><input type="radio" name="Q21" value="A" data-label="照暫定"><span><span class="ot">A.</span> 照暫定</span></label>
+    <label class="opt"><input type="radio" name="Q21" value="B" data-label="其他"><span><span class="ot">B.</span> 其他</span></label>
+    <div class="cond" data-when="B" hidden>
+      <label class="flabel" for="q21-other">選「其他」：請寫一句話</label>
+      <input type="text" class="note field" id="q21-other" data-role="other" data-short="Q21 其他" data-need="1" autocomplete="off" placeholder="一句話說明">
+    </div>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="q21-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="q21-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+
+  <h2 class="part-h">第三部分：請你提供的資料</h2>
+  <p class="part-sub">有就填，沒有可以之後再給（可留空）。</p>
+  <section class="card" id="p3-1" data-id="三-1" data-kind="text" data-part="3" data-short="公司名稱、統編">
+    <span class="qtag soft">資料 1</span>
+    <label class="qtitle block" for="p3-1-v">公司名稱、統一編號（或請會計提供）</label>
+    <textarea class="note field" id="p3-1-v" data-role="text" rows="2" placeholder="有就填，沒有可以留空、之後再給"></textarea>
+  </section>
+  <section class="card" id="p3-2" data-id="三-2" data-kind="text" data-part="3" data-short="平台名稱、網址">
+    <span class="qtag soft">資料 2</span>
+    <label class="qtitle block" for="p3-2-v">平台正式名稱、想用的網址（Livia 還沒想好，有想法就寫）</label>
+    <textarea class="note field" id="p3-2-v" data-role="text" rows="2" placeholder="有就填，沒有可以留空、之後再給"></textarea>
+  </section>
+  <section class="card" id="p3-3" data-id="三-3" data-kind="text" data-part="3" data-short="首批類別／廠商／通路主">
+    <span class="qtag soft">資料 3</span>
+    <label class="qtitle block" for="p3-3-v">首批想開放的商品類別、友好廠商（1～3 家）、熟識通路主（1～2 位）</label>
+    <div class="alertbox" id="p3-3-w" role="note">⚠ <b>聯絡到的人請先別自己去註冊</b>，等正式開門再註冊，不然資料會被清掉</div>
+    <textarea class="note field" id="p3-3-v" data-role="text" rows="2" aria-describedby="p3-3-w" placeholder="有就填，沒有可以留空、之後再給"></textarea>
+  </section>
+  <section class="card" id="p3-4" data-id="三-4" data-kind="text" data-part="3" data-short="LINE 官方帳號、客服 Email">
+    <span class="qtag soft">資料 4</span>
+    <label class="qtitle block" for="p3-4-v">LINE 官方帳號 ID、客服 Email</label>
+    <textarea class="note field" id="p3-4-v" data-role="text" rows="2" placeholder="有就填，沒有可以留空、之後再給"></textarea>
+  </section>
+  <div class="card plain">
+    <span class="qtag soft">收款帳號</span>
+    <p class="qdesc tight"><b>收款帳號</b>請私下用 LINE 傳給 Livia，<b>不要填在這份清單或網頁表單裡</b>（網頁表單不是私密頁面）。</p>
+  </div>
+
+  <h2 class="part-h">第四部分：之後再談（先讓你知道）</h2>
+  <p class="part-sub">這部分都不算在題數裡。</p>
+  <section class="card" id="p4-1" data-id="四-1" data-short="合夥分潤協議" data-kind="choice" data-optional="1" data-part="4" role="group" aria-labelledby="p4-1-g p4-1-t">
+    <span class="qtag soft" id="p4-1-g">四-1・選答</span>
+    <div class="qtitle" id="p4-1-t"><b>合夥分潤協議</b>：要不要找律師時一併請律師擬？<span class="tnote">（可之後再回，不算在題數裡）</span></div>
+    <label class="opt"><input type="radio" name="P4" value="A" data-label="一併擬"><span><span class="ot">A.</span> 一併擬</span></label>
+    <label class="opt"><input type="radio" name="P4" value="B" data-label="第一筆利潤前再談"><span><span class="ot">B.</span> 第一筆利潤前再談</span></label>
+    <details class="more">
+      <summary>＋ 補充一句（可留空）</summary>
+      <label class="sr" for="p4-1-note">＋ 補充一句（可留空）</label>
+      <textarea class="note field" id="p4-1-note" data-role="note" rows="2" placeholder="有想法可以補充"></textarea>
+    </details>
+  </section>
+  <div class="card plain">
+    <span class="qtag soft">四-2・先讓你知道</span>
+    <p class="qdesc tight">已另外整理給會計師、律師、報關行的問題清單（這點不用回）。</p>
+  </div>
+  <div class="card plain">
+    <span class="qtag soft">四-3・之後再談的事</span>
+    <p class="qdesc tight">先讓你知道，這點不用回：</p>
+    <ul class="later"><li>平台名稱、網域定了之後：Google 登入用的「Google Cloud 專案」要掛在誰（哪個帳號）名下。</li><li>人工通知分工：審核結果、邀約、解鎖、報價單成立、收款、出貨單號、工單回覆這些通知，誰用什麼方式通知（上線排程裡由你負責列分工表）。</li><li>招商節奏：首批之後，什麼時候、用什麼速度開放更多廠商和通路主。</li><li>運費細節：平台改數量或部分退貨後，金額跨過或跌破免運門檻怎麼處理；一張單能不能寄到好幾個地址；平台倉裡不同廠商的貨能不能合併收一筆；海外運費實際比初估高多少要先通知通路主、剛上線沒有歷史資料時初估由誰填；海外「後報運費」包含哪些（國際運費、關稅、報關費、匯差）；箱子大小差很多時「預估約幾箱」會有誤差，怎麼處理。</li></ul>
+  </div>
+
+  <div class="result" id="result" hidden>
+    <h3>✅ 你的回覆（複製後用 LINE 傳給 Livia）</h3>
+    <div class="missing" id="missing" hidden></div>
+    <label class="sr" for="resultText">回覆文字</label>
+    <textarea id="resultText" readonly></textarea>
+    <button class="copybtn" id="copyBtn" type="button">📋 一鍵複製</button>
+    <div class="done" id="doneMsg" role="status"></div>
+  </div>
+
+  <footer>國際直播團購平台・正式上線確認表　—　<span id="storeNote">填答會暫存在本機瀏覽器，重整不會不見</span></footer>
+</div>
+
+<div class="bar"><div class="inner">
+  <button class="btn-ghost" id="resetBtn" type="button">清除</button>
+  <button class="btn-primary" id="genBtn" type="button">產生我的回覆 →</button>
+</div></div>
+
+<script>
+(function(){
+  'use strict';
+  var KEY = 'launch-confirm-v2';
+  var DATE = '2026-10-01';
+  var TITLE = '【正式上線・泡泡確認】';
+
+  // ---- localStorage：全部包 try/catch，失效時照常作答 ----
+  var storeOK = true;
+  function storeGet(){
+    var raw = null;
+    try{ raw = window.localStorage.getItem(KEY); }
+    catch(e){ storeOK = false; return {}; }
+    if(!raw) return {};
+    try{ var obj = JSON.parse(raw); return (obj && typeof obj === 'object') ? obj : {}; }
+    catch(e){
+      // 資料損毀：只清掉這筆，不當成「不能暫存」
+      try{ window.localStorage.removeItem(KEY); }catch(e2){ /* 清不掉也照常作答 */ }
+      return {};
+    }
+  }
+  function storeSet(obj){
+    if(!storeOK) return;
+    try{ window.localStorage.setItem(KEY, JSON.stringify(obj)); }
+    catch(e){ storeOK = false; noteStore(); }
+  }
+  function storeClear(){
+    try{ window.localStorage.removeItem(KEY); }catch(e){ /* 無法暫存時本來就沒有資料 */ }
+  }
+  function noteStore(){
+    if(storeOK) return;
+    document.getElementById('storeWarn').hidden = false;
+    document.getElementById('pWarn').hidden = false;
+    document.getElementById('saveHint').textContent = '（注意：這個瀏覽器無法暫存，請一次填完再傳）';
+    document.getElementById('storeNote').textContent = '這個瀏覽器無法暫存填答，請一次填完再傳出';
+  }
+  (function probe(){
+    try{ var k = KEY + '-probe'; window.localStorage.setItem(k, '1'); window.localStorage.removeItem(k); }
+    catch(e){ storeOK = false; }
+  })();
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('[data-id]'));
+  function isMust(c){ return (c.dataset.kind === 'agree' || c.dataset.kind === 'choice') && !c.dataset.optional; }
+  var mustCards = cards.filter(isMust);
+  var textCards = cards.filter(function(c){ return c.dataset.kind === 'text'; });
+  var radios = Array.prototype.slice.call(document.querySelectorAll('input[type=radio]'));
+  var fields = Array.prototype.slice.call(document.querySelectorAll('.field'));
+  var needFields = Array.prototype.slice.call(document.querySelectorAll('[data-need]'));
+  var resultBox = document.getElementById('result');
+  var live = document.getElementById('srLive');
+
+  function checkedIn(card){ return card.querySelector('input[type=radio]:checked'); }
+  function clean(el){ return el ? (el.value || '').replace(/\s*[\r\n]+\s*/g, ' ／ ').trim() : ''; }
+  function fill(fmt, v){ return fmt.split('{v}').join(v); }
+  function shown(el){ var c = el.closest('.cond'); return !(c && c.hidden); }
+  function cardOf(el){ return el.closest('[data-id]'); }
+
+  function refreshCard(card){
+    var sel = checkedIn(card);
+    Array.prototype.forEach.call(card.querySelectorAll('label.opt'), function(l){
+      var r = l.querySelector('input'); l.classList.toggle('sel', !!(r && r.checked));
+    });
+    Array.prototype.forEach.call(card.querySelectorAll('.cond'), function(c){
+      c.hidden = !(sel && c.dataset.when === sel.value);
+    });
+    if(card.dataset.kind === 'agree' && sel && sel.value === '要討論'){
+      var d = card.querySelector('details.more'); if(d) d.open = true;
+    }
+  }
+
+  var lastDone = null;
+  function refreshProgress(){
+    var done = mustCards.filter(checkedIn).length;
+    var filled = textCards.filter(function(c){ return clean(c.querySelector('.field')) !== ''; }).length;
+    document.getElementById('pDone').textContent = done;
+    document.getElementById('pTotal').textContent = mustCards.length;
+    document.getElementById('pSide').textContent = '資料欄 ' + filled + '／' + textCards.length + '（可之後再給）';
+    document.getElementById('pFill').style.width = (mustCards.length ? Math.round(done / mustCards.length * 100) : 0) + '%';
+    // 只有作答數變動時才更新讀屏用的提示，避免每打一個字就重唸
+    if(lastDone !== null && done !== lastDone){ live.textContent = '已作答 ' + done + '／' + mustCards.length + ' 題'; }
+    lastDone = done;
+  }
+
+  function save(){
+    var s = { r:{}, f:{} };
+    radios.forEach(function(r){ if(r.checked) s.r[r.name] = r.value; });
+    fields.forEach(function(f){ if(f.value.trim()) s.f[f.id] = f.value; });
+    storeSet(s);
+  }
+
+  function restore(){
+    var s = storeGet();
+    var r0 = (s && s.r) || {}, f0 = (s && s.f) || {};
+    var has = Object.keys(r0).length + Object.keys(f0).length > 0;
+    if(!has) return; // 沒有暫存時，不動瀏覽器自己還原的狀態
+    radios.forEach(function(r){ r.checked = (r0[r.name] === r.value); });
+    fields.forEach(function(f){ f.value = (typeof f0[f.id] === 'string') ? f0[f.id] : ''; });
+  }
+
+  function openFilledDetails(){
+    Array.prototype.forEach.call(document.querySelectorAll('details.more'), function(d){
+      var ta = d.querySelector('textarea'); if(ta && ta.value.trim()) d.open = true;
+    });
+  }
+
+  // 該題「看得到」的補充欄位（隱藏的條件欄位不輸出；選填欄位空白就不輸出）
+  function extrasOf(card){
+    var out = [], any = false;
+    Array.prototype.forEach.call(card.querySelectorAll('[data-role="other"],[data-role="extra"]'), function(el){
+      if(!shown(el)) return;
+      var v = clean(el);
+      var fmt = el.dataset.fmt || (el.dataset.role === 'other' ? '其他：{v}' : '{v}');
+      if(v){ any = true; out.push(fill(fmt, v)); }
+      else if(!el.dataset.optional){ out.push(fill(fmt, '（未填）')); }
+    });
+    if(!checkedIn(card) && !any) return [];
+    return out;
+  }
+
+  function lineOf(card){
+    var id = card.dataset.id, kind = card.dataset.kind, sel = checkedIn(card);
+    var name = card.dataset.short ? ' ' + card.dataset.short : '';
+    if(kind === 'agree'){
+      var reason = clean(card.querySelector('[data-role="reason"]'));
+      var head = id + name + '：';
+      if(!sel) return head + '（未填）' + (reason ? '（補充：' + reason + '）' : '');
+      if(sel.value === '要討論') return head + '要討論（原因：' + (reason || '未填') + '）';
+      return head + '同意' + (reason ? '（補充：' + reason + '）' : '');
+    }
+    if(kind === 'choice'){
+      var ex = extrasOf(card);
+      var note = clean(card.querySelector('[data-role="note"]'));
+      if(note) ex.push('補充：' + note);
+      var ans = sel ? sel.value + ' ' + (sel.dataset.label || '') : (card.dataset.optional ? '（未填，可之後再談）' : '（未填）');
+      return id + name + '＝' + ans.trim() + (ex.length ? '（' + ex.join('；') + '）' : '');
+    }
+    var tv = clean(card.querySelector('.field'));
+    return id + name + '：' + (tv || '（未填）');
+  }
+
+  function chipGroup(title, items, hrefOf, textOf){
+    var MAX = 8;
+    var g = document.createElement('div'); g.className = 'grp';
+    var p = document.createElement('div'); p.textContent = title; g.appendChild(p);
+    var chips = document.createElement('div'); chips.className = 'chips';
+    items.slice(0, MAX).forEach(function(it){
+      var a = document.createElement('a'); a.href = '#' + hrefOf(it); a.textContent = textOf(it);
+      a.addEventListener('click', function(ev){
+        var target = document.getElementById(hrefOf(it));
+        if(target && /^(INPUT|TEXTAREA)$/.test(target.tagName)){
+          ev.preventDefault(); target.scrollIntoView({ block:'center' }); target.focus({ preventScroll:true });
+        }
+      });
+      chips.appendChild(a);
+    });
+    if(items.length > MAX){
+      var m = document.createElement('span'); m.className = 'more-n';
+      m.textContent = '…還有 ' + (items.length - MAX) + ' 項'; chips.appendChild(m);
+    }
+    g.appendChild(chips);
+    return g;
+  }
+
+  function build(){
+    var done = mustCards.filter(checkedIn).length;
+    var lines = [TITLE + DATE + '　已作答 ' + done + '／' + mustCards.length + ' 題'];
+    var part = null, missing = [];
+    cards.forEach(function(c){
+      if(c.dataset.part !== part){ lines.push(''); part = c.dataset.part; }
+      lines.push(lineOf(c));
+      if(isMust(c) && !checkedIn(c)) missing.push(c);
+    });
+    var needs = needFields.filter(function(el){ return shown(el) && clean(el) === ''; });
+    function needName(el){ return el.dataset.role === 'other' ? el.dataset.short : cardOf(el).dataset.id + ' ' + el.dataset.short; }
+    if(missing.length || needs.length) lines.push('');
+    if(missing.length) lines.push('※ 還沒填：' + missing.map(function(c){ return c.dataset.id; }).join('、'));
+    if(needs.length) lines.push('※ 還缺補充資料：' + needs.map(needName).join('、'));
+    document.getElementById('resultText').value = lines.join('\n');
+
+    var mbox = document.getElementById('missing');
+    mbox.textContent = '';
+    if(missing.length){
+      mbox.appendChild(chipGroup('還有 ' + missing.length + ' 題沒選（點題號跳過去補；也可以先傳）：', missing,
+        function(c){ return c.id; }, function(c){ return c.dataset.id; }));
+    }
+    if(needs.length){
+      mbox.appendChild(chipGroup('還缺 ' + needs.length + ' 項補充資料（例如名字、信箱、金額）：', needs,
+        function(el){ return el.id; }, needName));
+    }
+    mbox.hidden = !(missing.length || needs.length);
+  }
+
+  var doneMsg = document.getElementById('doneMsg');
+  function onChange(card){
+    if(card) refreshCard(card);
+    refreshProgress();
+    save();
+    if(!resultBox.hidden) build();
+    doneMsg.textContent = '';
+  }
+
+  radios.forEach(function(r){ r.addEventListener('change', function(){ onChange(cardOf(r)); }); });
+  fields.forEach(function(f){ f.addEventListener('input', function(){ onChange(null); }); });
+
+  document.getElementById('genBtn').addEventListener('click', function(){
+    build();
+    resultBox.hidden = false;
+    doneMsg.textContent = '';
+    resultBox.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var ta = document.getElementById('resultText');
+    function ok(){ doneMsg.className = 'done'; doneMsg.textContent = '已複製！貼到 LINE 傳給 Livia 即可 🎉'; }
+    function fallback(){
+      var copied = false;
+      try{ ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length); copied = document.execCommand('copy'); }
+      catch(e){ copied = false; }
+      if(copied){ ok(); }
+      else{ doneMsg.className = 'done fail'; doneMsg.textContent = '自動複製失敗：請長按上方文字 → 全選 → 拷貝'; }
+    }
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(ta.value).then(ok, fallback);
+    }else{
+      fallback();
+    }
+  });
+
+  // 清除：頁內二次確認（部分 App 內建瀏覽器不支援 confirm 對話框）
+  var resetBtn = document.getElementById('resetBtn'), armTimer = null;
+  function disarm(){
+    if(armTimer){ clearTimeout(armTimer); armTimer = null; }
+    resetBtn.classList.remove('armed'); resetBtn.textContent = '清除';
+  }
+  resetBtn.addEventListener('click', function(){
+    if(!resetBtn.classList.contains('armed')){
+      resetBtn.classList.add('armed'); resetBtn.textContent = '確定清除？';
+      live.textContent = '再按一次清除鍵，就會清除全部答案';
+      armTimer = setTimeout(disarm, 5000);
+      return;
+    }
+    disarm();
+    storeClear();
+    radios.forEach(function(r){ r.checked = false; });
+    fields.forEach(function(f){ f.value = ''; });
+    Array.prototype.forEach.call(document.querySelectorAll('details.more'), function(d){ d.open = false; });
+    cards.forEach(refreshCard);
+    refreshProgress();
+    resultBox.hidden = true;
+    doneMsg.textContent = '';
+    live.textContent = '已清除全部答案';
+  });
+
+  restore();
+  openFilledDetails();
+  cards.forEach(refreshCard);
+  refreshProgress();
+  noteStore();
+})();
+</script>
+</body>
+</html>
